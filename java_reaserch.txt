@@ -1,0 +1,137 @@
+1) Abstract class can have data members,constructors,abstract methods
+eg
+===
+public class Main
+{
+	public static void main(String[] args) {
+	    Student s = new Stud1("kishore");
+	    //s.setStudentName("Kishore");
+	    s.getStudentName();
+	}
+}
+
+abstract class Student{
+    String studentName;
+  
+    Student(String studentName){
+        this.studentName =studentName;
+    }
+    
+    abstract void setStudentName(String studentName);
+    abstract void getStudentName();
+}
+
+class Stud1 extends Student{
+    
+    Stud1(String studentName){
+        super(studentName);
+    }
+    void setStudentName(String studentName){
+        super.studentName=studentName;
+    }
+    void getStudentName(){
+        System.out.println("The name of student1 is "+super.studentName);
+    }
+}
+
+
+2)example of multi-level inheritence
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		VehicalDetails vd = new VehicalDetails("4-wheeler","Car","Maruthi");
+		vd.getVehicalName();
+		vd.getWhatVehical();
+		vd.getModelName();
+	}
+}
+
+class Vehical{
+    String vehicalType;
+    Vehical(String vehicalType){
+        this.vehicalType=vehicalType;
+    }
+    void getVehicalName(){
+        System.out.println("The Type of vehical is "+vehicalType);
+    }
+}
+
+class WhatVehical extends Vehical{
+    String whatVehical;
+    
+    WhatVehical(String vehicalType,String whatVehical){
+        super(vehicalType);
+        this.whatVehical=whatVehical;
+    }
+    
+    void getWhatVehical(){
+        System.out.println("your vehical is a "+whatVehical);
+    }
+}
+
+class VehicalModel extends WhatVehical{
+    String modelName;
+    
+    VehicalModel(String vehicalType,String whatVehical,String modelName){
+        super(vehicalType,whatVehical);
+        this.modelName=modelName;
+    }
+    
+    void getModelName(){
+        System.out.println("The model of "+super.whatVehical+" is "+this.modelName);
+    }
+}
+
+class VehicalDetails extends VehicalModel{
+    VehicalDetails(String vehicalType,String whatVehical,String modelName){
+        super(vehicalType,whatVehical,modelName);
+    }
+}
+
+3)method overloding(static polymorphism) can be also acheived in different classes
+
+public class Main
+{
+	public static void main(String[] args) {
+		OperationExtends op = new OperationExtends();
+	    System.out.println(op.add(1.3f,2.2f));
+	}
+}
+abstract class Operation{
+    
+    int add(int val1,int val2){
+        return val1+val2;
+    }
+    
+    abstract float add(float a,float b);
+}
+class OperationExtends extends Operation{
+    float add(float a,float b){
+        return a+b;
+    }
+}
+
+4)
+
+public class Main
+{
+	public static void main(String[] args) {
+		OperationExtends op = new OperationExtends();
+	    System.out.println(op.add(1,2));
+	}
+}
+ class Operation{
+    
+    int add(int a,int b){
+        return a+b;
+    }
+
+}
+class OperationExtends extends Operation{
+    
+    int add(int val1,int val2){
+        return String.valueOf(val1)+String.valueOf(val2);
+    }
+}

@@ -1,0 +1,887 @@
+core java interview questions:
+
+1)why java is not 100% object oriented programming language?
+	Because of primitive datatypes namely: byte,short,int,long,double,char,boolean,float
+	To make them Object oriented we have wrapper classes which actually "wrap" the primitive data type into an object of that class
+
+2)why pointers are not allowed in java?
+	Because i)They are unsafe
+		ii)Increases the complexity of the program and since java is known for simplicity of code, adding the concepts of pointers will be 
+		contradicting
+		iii)since JVM is responsible for implicit memory allocation, thus in order to avoid direct access to memory by the user, pointers
+		are discourged in java
+
+3)what is JIT Compiler?
+       The Just-In-Time (JIT) compiler is a component of the Java™ Runtime Environment(JRE) that improves the performance of Java applications at run time.
+
+4)Why String is immutable in java?
+	Because i)String pool requires string to be immutable otherwise shared references can be changed  from anywhere
+		ii)Security because string is shared on different file system,networking connection,database connection, having immutable string
+		allows you to be secure and safe because no one can change reference of string once its get created
+	Note:String pool is the place where all literals of string to be kept
+
+5)what is marker interface?
+	A marker interface can be defined as the interface having no data members and member functions.In simpler words,an empty interface is called 
+	marker interface
+	example: public interface Cloneable{
+		 }
+
+6)Can you override private or static method in java?
+	we can not ovveride private or static methods in java because parent class private method is completely not accessable in child class so
+	evn if we create similar private method in child class it will be treated as new method eventhough the names,return type & arguments of 
+	both methods are similar. 
+
+	For static methods,if we create similar method with same return type and arguments in child class then it will hide superclass method
+	this is also known as "method hidding"
+
+7)Does finally always execute in java?
+	Not in following cases i) if we use System.exit() function
+			       ii) system crash 
+
+8)What methods does the Object Class have?
+	Object Class is the parent class of all classes which are created 
+	i) protected Object clone() throws CloneNotSupportedException
+		-->Creates and returns a copy of this object
+	ii)public boolean equals(Object obj)
+		-->Indicates Whether some other object is "equal to" this one
+	iii)protected void finalize() throws Throwable
+		-->Called by garbage collector on an object  where garbage collection determines that there are no more references to the object
+	iv)public final Class getClass()
+		-->returns Runtime class of an object
+	v)public int hashCode()
+		-->returns a hash code value of an object
+	vi)public String toString()
+		-->returns a string representation of an object
+	vii)public final void notify()
+	viii)public final void notifyAll()
+	ix)public final void wait()
+	 x)public final void wait(long timeout)
+	xi)public final void wait(long timeout,int nanos)
+ 
+9)How can you make a class Immutable?
+	steps:i)Declare the class as final so it can't be be extended
+	      ii)Make all fields private so that direct access is not allowed
+	      iii)Don't provide setter methods for varaibles
+	      iv)make all mutable fileds as final so thats its value can be assigned only once
+	      v)Initialize all the fields via a constructor performing a deep copy
+	      vi)Perform cloning of an object in the getter methods to return a copy rather than returing the actual object reference
+
+10)What is Singleton class in java ad how can we make a class singleton?
+	Singleton class is a class whose only one instance can be created at any given time in one JVM 
+	Example:
+		public class Animal{
+			private static Animal single_instance = null;
+			
+			private Animal(){
+			}
+
+			public static Animal getInstance()
+			{
+				if(single_instance == null)
+				{
+					single_instance = new Animal();
+				}
+			  return single_instance;
+			}
+		}
+
+11)What is java class Loader? Explain its principles and its types?
+	Class Loader is an abstract class which belongs to java.lang package.It is used to load the classes from different resources at run time
+	Java class loader is based on 3 principles:
+		a)Delegation Principle: It forwards the request for class loading to parent class loader
+		b)Visibility Principle: It allows child class loader to see all the classes loaded by parent classloader
+		c)Uniqueness Principle: It allows to load a class once.It is acheived by deligation principle
+	Types:
+		1)Boostrap class loader:It loads classes from jre/lib/rt.jar directory. It is a parent of all class loaders.
+		2)Extensions class loader: It loads classes from jre/lib/ext or java.ext.dirs directory It deligates class loading to its parent
+		3)System class loader: It loads classes from CLASSPATH environment variable or using -cp or -classpath command line options 
+
+12)Is Java pass by value or pass by reference?
+	Java is always pass  by values because it always creates copy of references and pass them as valuable to methods. 
+
+13)what is comparable and comparator interface in java?
+	Comparable: Comparable interface is used to sort the objects of the user-defined class.This interface is found in java.lang package 
+	and contains only one method named compareTo(Object).It provides single sorting sequence only i.e we can sort the elements on the basis of
+	single data member
+	
+	Comparator: Comparator interface is also used to sort the objects of the user-defined class. This interface is found in java.util package 
+	and contains 2 methods namely compare(Obj 1, Obj 2) and  equals(Object element).It provides multiple sorting sequence i.e we can sort the 
+	elsements on the basis of any data member
+
+14)Can we reduce visibility of inherited method in java?
+	we can't reduce visibility of inherited method in java.we will get compile time error . To avoid this, either we reduce visibility of the
+	parent method or increase the visibility of the inherited method
+	
+	Resolution:
+	========
+	Either reduce the visibility of the parent method.  
+	-------------------------------------------------
+	public class ParentTest {
+    		private String element = "Hello";
+ 
+    		private String getString(){
+       			return element;
+    		}
+	}
+
+	public class Test extends ParentTest {
+    		private String element = "Hello";
+
+    		private String getString(){
+       			return element;
+    		}
+	}
+
+	or Increase the visibility of the derived method.
+	-----------------------------------------------
+	public class ParentTest {
+    		private String element = "Hello";
+ 
+    		public String getString(){
+       			return element;
+    		}
+	}
+
+	public class Test extends ParentTest {
+		private String element = "Hello";
+
+    		public String getString(){
+			return element;
+		}	
+    	}
+15)inheritence-->Is-A relation ship in java
+   
+16)What is Association(HAS-A), Composition, Aggregration in Java?
+	Association refers to the relationship between multiple objects. It refers to how objects are related to each other and how they are using 
+	each other's functionality. We can describe the Association as a has-a relationship between the classes.Composition and aggregation are two 
+	types of association.
+	
+	The composition is the strong type of association. An association is said to composition if an Object owns another object and another object
+	cannot exist without the owner object. Consider the case of Human having a heart. Here Human object contains the heart and heart cannot exist 
+	without Human
+	
+	Example of Composition:
+		//Car must have Engine
+		public class Car {
+   			//engine is a mandatory part of the car
+   			private final Engine engine;
+   			public Car () {
+      				engine = new Engine();
+   			}
+		}
+
+		//Engine Object
+		class Engine {}
+	
+	Aggregation is a weak association. An association is said to be aggregation if both Objects can exist independently. For example, a Team object
+	and a Player object. The team contains multiple players but a player can exist without a team.
+	
+	Example of Aggregation:
+		
+		//Team
+		public class Team {      
+  		 //players can be 0 or more
+   			private List players;
+   			public Car () {
+      				players = new ArrayList();
+   			}
+		 }
+//Player Object
+class Player {}
+
+17)What do we need Java Design pattern(well documention of tested solution)? [https://youtu.be/JFvSCobD7JU]
+	Design pattern gives a software developer an array of tried and tested solutions to common problems, thus reducing the technical risks to the 
+	project by not having to employ new and untested design ,thus saving time and  effort during the implementation stage of software development
+	life cycle
+					
+					Design pattern
+			________________________|_________________________
+			Creational	Behavioral	Structural	J2EE
+			patterns	patterns	patterns	patterns
+ __________________________|___________________
+ factory  Abstract  Builder  prototype Singleton
+ pattern  factory
+	  pattern
+
+Creational patterns: These patterns related to the way of creating the objects.It also used to define and describe how objects are created at class
+instantiated time 
+a)Factory pattern:In this pattern, we don't expose the creation logic to the client and  refer the created object using a standard interface
+		  The factory pattern is also known as "virtual constructor"
+		  steps:
+			i)create  main class which call factory class
+			ii)factory class returns required class instance
+		
+		  Example:      Profession.java
+
+				package abstract_factory.pattern;
+				public interface Profession {
+				void print();
+				}		
+		                
+				Engineer.java 
+				
+				package abstract_factory.pattern;
+				public class Engineer implements Profession{
+
+					@Override
+					public void print() {
+					System.out.println("In Print of Engineer class");
+		
+					}
+
+				}
+			
+				Teacher.java 
+				package abstract_factory.pattern;
+				public class Teacher implements Profession{
+
+					@Override
+					public void print() {
+					System.out.println("In Print of Teacher class");
+					}
+
+				}
+
+				ProfessionFactory.java
+				package abstract_factory.pattern;
+				public class ProfessionFactory{
+					@Override
+					public Profession getProfession(String typeOfProfession){
+		  				if(typeOfProfession == null){
+	         					return null;
+	      					}		
+	         
+		  				if(typeOfProfession.equalsIgnoreCase("Engineer")){
+	         					return new Engineer();
+	      					} 
+						else if(typeOfProfession.equalsIgnoreCase("Teacher")){
+	         					return new Teacher();
+	      					}
+	      
+	      				return null;
+	   			       }
+				}
+				
+				FactoryPatternMainClass.java 
+				package abstract_factory.pattern;
+				public class FactoryPatternMainClass {
+	
+					public static void main(String[] args) {
+						ProfessionFactory professionFactory = new ProfessionFactory();
+						Profession doc = professionFactory.getProfession("Engineer");
+						doc.print();
+					}
+				}
+
+Singleton design pattern:  refer question no:10
+
+18)Why JAVA 8? Main agenda behind JAVA8?
+	The significant reason for introducing java 8  was to Conciseness in the code .It brings functional programming by enabling lambda expressions
+	(a powerful tool to create concise code base). If we recall past, python and scale did this type of conciseness in code so by mid 20s java lost
+	a market due to this languages.hence to prevent furthre lose java upgraded itself from only OOPS language to some functional programming
+	to create concise code base
+
+19)What are new features which got introduced in java8?
+	1)Lambda expressions
+	2)Stream API
+	3)Default methods in the interface
+	4)Static methods
+	5)Functional Interface
+	6)Optional
+	7)Method references
+	8)Date API
+	9)Nashron,JavaScript Engine
+20)What are main advantages of  using java8?
+	1)Compact code(less boilerplate code)
+	2)More readable and reusable code
+	3)More testable code
+	4)Parallel operations
+
+21) What is lambda expression?
+	Lambda expression is an anonymous function (without name,return type,and access modifiers and having one lambda -> symbol)
+	public void add(int a,int b){
+		System.out.println(a+b);
+	}
+	
+	(a,b)-> System.out.println(a+b)
+
+22)what are functional interface?
+	The functional interfaces are those interfaces which  can have only one abstract method. It can have any number of static method,default methods.
+	There are already many functional interfaces that are present in java egs: Comparable, Runnable
+23)Can we create own functional interface?
+	Yes. By following below steps
+	a)Create an interface
+	b)Annotated with @FunctionalInterface
+	c)Define exactly one Abstract method
+	d)There is no restriction on number of static and  default methods can defined in that interface
+
+	Java implicitly identifies functinal interfaces but still you can also annotate with @FunctionalInterface.It just give you the security that
+	in case if you by mistake add  2 abstract methods then compiler will throw compiler time error
+
+	
+
+24)How lambda expressions and functional interfaces are related to each other?
+	Functional interfaces is used to provide reference to lambda expression
+	eg: Comparator<String> c = (s1,s2) -> s1.compareTo(s2)
+	
+	FunctionalInterfaceDemo.java
+			
+		@FunctionalInterface
+		public interface FunctionalInterfaceDemo{
+			void singleAbstractMethod();
+		}
+	FunctionalInterfaceMain.java
+		
+		public static void main(String[] args){
+		  FunctionalInterfaceDemo f = () -> System.out.println("This is implemtation of Functinal interface abstract method using lambda exp");
+
+	
+25)What is method reference in java8?
+	Method reference is a replacement of lambda expressions. It is used to refer method of functional interface to an existing method.
+	Mainly it is used for code reusability.Functional interface's abstract method can be mapped to specific existing method using double colon(::)
+	operator .This is method reference.Hence method reference is an alternative to Lambda expression
+	
+	whenever we have existing implementation  of abstract method of our functional interface then we can go for method reference. if no such
+	implimented method then we can go for lambda expression
+
+	example:
+		FunctionalInterfaceDemo.java
+			
+			@FunctionalInterface
+			public interface FunctionalInterfaceDemo{
+				void singleAbstractMethod();
+			}
+		
+		MethodReferenceDemo.java
+			public class MethodReferenceDemo{
+				public static void main(String[] args){
+					FunctionalInterfaceDemo functionalInterfaceDemo = Test :: testImplimentation;
+					functionalInterfaceDemo.singleAbstractMethod();
+				}
+			}
+			class Test{
+				public static void testImplimentation(){
+					System.out.println("This is test implementation of your abstract method");
+				}
+			}
+
+26)What is default methods in java8?
+	The default methods are a way for adding new methods to the interface without affecting the implimenting classes.Hence with this new feature
+	java people defended many compile time errors that may arise due to unimplemented  methods of interface
+	
+	without default method concept:
+	------------------------------
+	InterfaceDemo.java
+		public interface InterfaceDemo{
+			void printName();  //if we declare like this all implementation classes got errors
+	        }
+        InterfaceImpl1.java
+		public class InterfaceImpl1 implements InterfaceDemo{
+		//here no implimented method hence got error in this file
+		}
+	with default method concept:
+	----------------------------
+	InterfaceDemo.java
+		public interface InterfaceDemo{
+			default void printName() {      //if we declare like this none of implementation classes got errors
+	        	       System.out.println("This is default implementation of interface");
+		        }
+		}
+	InterfaceImpl1.java
+		public class InterfaceImpl1 implements InterfaceDemo{
+		//here no implimented method still we don't get any errors in this file bcz of default method in parent interface
+			public ststic void main(String[] args){
+				InterfaceImpl1 imp1 = new InterfaceImpl1();
+				imp1.printName(); -->[o/p: This is default implementation of interface]
+		}
+	InterfaceImpl2.java
+		public class InterfaceImpl2 implements InterfaceDemo{
+		//here i want to ovveride default method in parent interface
+			public static void main(String[] args){
+				InterfaceImpl2 imp2 = new InterfaceImpl2();
+				imp2.printName();
+			}
+			
+			public void printName(){
+				System.out.println("This is ovveride message of  default method of parent interface");
+			}
+		}
+		
+27)Is it necessary to override default methods in java8?
+	i)Default methods have dummy implementations
+	ii)Implementing classes if ok with dummy implementations then use dummy impl of default methods 
+	ii)if not satisfied then they can ovveride and provide their own implementations
+	
+	example:
+	--------
+	InterfaceDemo.java
+		public interface InterfaceDemo{
+			default void printName() {      //if we declare like this none of implementation classes got errors
+	        	       System.out.println("This is default implementation of interface");
+		        }
+		}
+	
+	InterfaceImpl2.java
+		public class InterfaceImpl2 implements InterfaceDemo{
+		//here i want to ovveride default method in parent interface
+			public static void main(String[] args){
+				InterfaceImpl2 imp2 = new InterfaceImpl2();
+				imp2.printName();
+			}
+			
+			public void printName(){
+				System.out.println("This is ovveride message of  default method of parent interface");
+			}
+		}
+
+28)Is default keyword one of the access modifiers?
+	i)Default is not the access modifier like public or protected or private
+	ii)For default access access modifiers we don't use any keyword
+	iii)hence default keyword was only used in classess till java1.8 version for switch case only but never in interface
+	iv)Now its used for default methods in interface to provide a default implimentations for all implementing classes to use
+29)Explain how default methods in interface cope up with Diamond problem?
+	If two implemented interfaces contains same default methods then its the diamond probelm
+	In java, in such situations the code will not compile
+	Solution to dimond problem:
+	-------------------------
+	Use InterfaceName.super.methodName();
+	
+	example:
+		DiamondProbelmInterface1.java
+		public interface DiamondProbelmInterface1{
+			default void m1(){
+			System.out.println("Interface 1 implementation");
+			}
+		}
+		
+		DiamondProbelmInterface2.java
+		public interface DiamondProbelmInterface2{
+			default void m1(){
+			System.out.println("Interface 2 implementation");
+			}
+		}
+		
+		DiamondProbelmMain.java
+		public class DiamondProbelmMain implements DiamondProbelmInterface1,DiamondProbelmInterface2{
+			public void m1(){
+				DiamondProbelmInterface1.super.m1();
+			}
+			public static void main(String[] args){
+				DiamondProbelmMain  dpm = new DiamondProbelmMain();
+				dpm.m1();
+			}
+			
+			
+		}
+30)Why static methods were introduced in interface in java8?
+	Only reason for introducing static methods in interface is that  you can call those methods with just interface name.No need to create class
+	and then its objects 
+	example:
+		InterfacewithStaticMethod.java
+		public interface InterfacewithStaticMethod{
+			static void statMethod(){
+				System.out.println("This is static method from interface");
+			}
+		}
+		InterfacewithStaticMethodMain.java
+		public class InterfacewithStaticMethodMain implements InterfacewithStaticMethod{
+			InterfacewithStaticMethod.statMethod();
+		}
+31)Are static methods in interface available to implementing classes by default in java8?
+	Static methods are not available to all implementing classes .They are not default methods.they are just static.Hence we can call these 
+	methods using interface name explicitly from the implementing classes as implementing classes wont have access to these methods directly
+	(This is the disadvantage of static methods of interface that its not available to all implementing classes)
+
+32)What are predicates in java 8?
+	predicate is defined functional interface having only one abstract method i.e public boolean  test(T t). This is used to check some boolean
+	condition
+	
+	example:
+		without predicate
+		------------------
+		
+			package predicate_demo
+			import java.util.function.Predicate;
+			public class PredicateFunctionDemo {
+				public static void main(String[] args){
+				PredicateFunctionDemo predicateFunctionDemo = new PredicateFunctionDemo ();
+				System.out.println(predicateFunctionDemo.testStringLength("code decode"));
+ 				}
+				public boolean testStringLength(String s){
+					if(s.length()>=5)
+						return true;
+					else
+						return false;
+				}
+			}
+			
+		with predicate
+		--------------
+			package predicate_demo
+			import java.util.function.Predicate;
+			public class PredicateFunctionDemo {
+				public static void main(String[] args){
+				Predicate<String> checkLength = s -> s.length() >=5;
+				System.out.println(The length of string is greater than 5: "+ checkLength.test("code decode"));
+ 				}	
+			}
+
+33)When will we use predicates?
+	we use predicates in the situation where we will need to check conditions with the help of single abstract method test()
+34) what is type of predicate input parameters and return type?
+	Input to predicate can be anything Predicate<String>,Predicate<Integer>,Predicate<Employee>. hence only one input type argument is required 
+	for predicate. and there is not return type for predicates as it always returns boolean only
+35)what are the advantages of predicates?
+	i)code reusability(1 time declarationa and can be used as many times in anywhere in java appliaction)
+	ii)conditional checks are holded by functional interfaces
+36)what is predicate joining?
+	It is used to join one or more predicates. we can acheive this in 3 ways by using AND ,OR & Negate
+	example:
+		PredicateJoining.java
+		package predicate_joining
+		import java.util.function.Predicate;
+		public class PredicateJoining {
+			public static void main(String[] args){
+				Predicate<String> checkLength = s->s.length()>=5;
+				System.out.println("The length of string is grater than 5: "+ checkLength.test("code decode"));
+				Predicate<String> checkEvenLength = s->s.length()%2==0;
+				System.out.println("The length of string is  "+ checkEvenLength.test("code decode"));
+				System.out.println("after merging with and " + checkLength.and(checkEvenLength).test("code decode"));
+				System.out.println("after merging with or " + checkLength.or(checkEvenLength).test("code decode"));
+				System.out.println("after merging with negate " + checkLength.negate().test("code decode"));
+			}
+		}
+
+37)What are functions in java8?
+	Function is also a predefined functional interface which is having only one abstract method i.e R apply(T t).As we know predicate as it only 
+	returns boolean value without return type.hence this functions overcomes this disadvantage by returning all types of values
+	example:
+		FunctionDemo.java
+		package function_demo;
+		import java.util.function.Function;
+		public class FunctionDemo {
+			public static void main(String[] args){
+				Function<Integer,Integer> squareMe = i -> i*i;
+				System.out.println("Square of 5 is "+squareMe.apply(5));
+			}
+		}
+
+38)What are the differences between predicate and function in java8?
+	prdicate			function
+i)It has the return type as 	i)It has return type as Object.It is used 				  
+  Boolean value & it is used 	  to perform operations and return results	
+  for conditional checks
+
+ii)It is written in the form	ii)It is written in the form of Function<T,R>
+Predicate<T> which accepts	   which also acceptes single argument but
+single arguments		   return any type of Object denoted by R
+
+iii)It contains test()		iii)It contains apply() method
+   method.
+
+39)what is functional chaining?
+	It is used to combine multiple functions together with andThen or compose
+	There are 2 ways to combine
+		i)f1.andThen(f2).apply(Input); -->first f1 then f2
+		ii)f1.compose(f2).apply(Input);--> first f2 then f1
+	Multiple functions can be combined like as follows
+		f1.andThen(f2).andThen(f3).andThen(f4).apply(Input);
+
+	example:
+		FunctionDemo.java
+		package function_demo;
+		import java.util.function.Function;
+		public class FunctionDemo {
+			public static void main(String[] args){
+				Function<Integer,Integer> doubleIt = i -> 2*i;
+				System.out.println("Double it "+ doubleIt.apply(2)); --->4
+				
+				Function<Integer,Integer> cubeIt = i -> i*i*i;
+				System.out.println("Double it "+ cubeIt.apply(2)); ----->8
+				
+				System.out.println("First doubling using apply " + doubleIt.andThen(cubeIt).apply(2)); ---->64
+				System.out.println("First cubing using compose " + doubleIt.compose(cubeIt).apply(2)); ----->16
+			}
+		}	 
+40)What is consumer functional interface?
+	It is used to consume item but never return anything(never supply) with the help of single abstract method public void accept(T t)
+	
+	example:
+		ConsumerDemo.java
+		package consumer_demo;
+		import java.util.function.Consumer;
+		public class ConsumerDemo {
+			public static void main(String[] args){
+				Consumer<Integer> squareMe = i->System.out.println("Taking an input and performing square and returing nothing "+i*i);
+				squareMe.accept(5);
+				
+			}
+		}
+41)what is consumer chaining?
+	It is used to combine multiple consumers together with andThen.There is only one way to combine consumers as
+	c1.andThen(c2).accept(Input);
+
+	example:
+		ConsumerDemo.java
+		package consumer_demo;
+		import java.util.function.Consumer;
+		public class ConsumerDemo {
+			public static void main(String[] args){
+				Consumer<Integer> squareMe = i->System.out.println("Taking an input and performing square and returing nothing "+i*i);
+				squareMe.accept(5);
+				
+				Consumer<Integer> doubleMe = i->System.out.println("Taking an input and performing double and returing nothing "+2*i);
+				doubleMe.accept(5);
+			
+				squareMe.andThen(doubleMe).accept(5);
+			}
+		}
+42)what is supplier functional interface?
+	It is used to supply required objects and will not consume any input with the help of single abstract method get()`and No  supplier chaining
+	exists as it does not takes any inputs
+	example:
+		import java.util.Date;
+		public class SupplierDemo{
+			public static void main(String[] args){
+				Supplier<Date> currentDate = () -> new Date();
+				System.out.println(currentDate.get());
+			}
+		}
+43)what is BiPredictor,BiFunction,BiConsumer? why BiSupplier does not exist?
+	BiPredictor is a functional interface which is used to accept two arguments and perform operation and return only boolean output
+	BiFunction is also a predefined functional interface which accepts two argumenst and produces output based on operation of two input values
+	BiConsumer is also a predefined functional interface which also accepts two input arguments and does not return anything
+
+	Bisupplier does not exist as it produces output  even without accepting single input argument 
+
+	Exanple:
+		BiDemo.java
+		package Bi_demo;
+		import java.util.function.BiFunction;
+		public class ConsumerDemo {
+			public static void main(String[] args){
+				
+				BiPredictor<Integer,Integer> checkSumOfTwo = (a,b) -> a+b >=5;
+				System.out.println("Sum of 2 and 5 is greater than 5 : "+ checkSumOfTwo.test(2,5));
+				
+				BiFunction<Integer,Integer> multiplyBoth = (a,b) -> a*b;
+				System.out.println("Multiply of 2 and 4 is " + multiplyBoth.apply(2,4));
+
+				BiConsumer<Integer,Integer> squareMe = (i,j)->System.out.println("Taking an input and performing square and returing nothing "+i*j);
+				squareMe.accept(5,6);
+			}
+		}
+44)If we want to operate on 3 argument input then can we use tripredictor,triconsumer..?
+	No.There is no such predefined functional interfaces in java8. It has only 1 or 2 argument inbuilt functional interfaces.
+45)what are streams in java 8?
+	It is a special iterator class that allows processing collections of objects in a functional manner or Streams are used to process 
+	bulk objects of collection
+	
+	example: StreamsDemo.java
+		 public class StreamsDemo{
+			public static void main(String[] args){
+				List<Integer> arrList = new ArrayList<Integer>();
+				arrList.add(15);
+				arrList.add(25);
+				arrList.add(5);
+				arrList.stream().filter(x -> x>=15).collect(Collectors.toList()).forEach(x->System.out.println(x));
+				//arrList.stream().filter(x -> x>=15).forEach(x->System.out.println(x)); -->check this also
+			}
+		}
+46)What are the differences between streams(java 8) and java.io.stream? 
+  or Why streams were introduced in java 8 if we already have java.io.stream?
+	Java.io.stream is a sequence of characters or binary data which is used to be written to a file or to read data from a file
+	whereas streams are related to collection objects
+
+47)What are the differences between streams(java 8) and collections?
+	To represent group of collection as single entity then we should use collection concept
+	if we want to perform operation on bulk objects in collection then we should go for streams
+
+48)what are the steps to create and process stream?
+	i)first we need to create stream object by following syntax
+		Stream s= collectionObject.stream();
+	ii)once we got stream object we can process the object of collection in 2 ways
+		a)configuration of stream
+		b)processing that configuration
+	iii)configuration of stream is done by 
+		a)Map b)filter
+49)How to filter the stream of objects?
+	syntax: Stream s = collectionObject.stream().filter(x -> x%2==0);
+
+50)How to map the stream objects?
+	It is used to create new objects against each existing stream object based on some function
+	StreamsDemo.java
+		 public class StreamsDemo{
+			public static void main(String[] args){
+				List<Integer> arrList = new ArrayList<Integer>();
+				arrList.add(15);
+				arrList.add(25);
+				arrList.add(5);
+
+				arrList.stream().map(x->x*x).forEach(x->System.out.println(x));
+			}
+		}
+51)what are the difference between filter and map in java 8 ?
+	if we want to filter objects from collections then we go for filter whereas if we want to perform  some opeartion on each object of the
+	collection then create another mapped object with different value(after operation has performed) for each object of that collection then go
+	for map
+
+52)How do you process the streams?
+	we can do processing the streams in different ways
+			streams
+			   |
+	________________________________________
+	configuration 			processing that	
+	of streams			configuration
+	 |                                   |
+_________|_______			     |
+filter      map 			     |
+					     |
+                _______________________________________________________________
+	        collect      count     sorted  min max foreach     toArray    of
+
+collect():How to process the stream elements using collect()?
+	  if we want to collect elements of stream after filtering or mapping and add them to required collection then use collect() method
+	  example:. 
+		List<Integer> al = new ArrayList<Integer>();
+		al.add(23);
+		al.add(54);
+		al.add(78);
+		Stream<Integer> openStream = al.stream();
+		Stream<Integer> filteredStream = openStream.filter(x->x>=25);
+		List<Integer> alNew = filteredStream.collect(Collectors.toList());
+		alNew.stream().forEach(x->System.out.println(x));
+
+count():How to process the stream elements using count()?
+	 if we want to count how many elements are there in the processed stream then we can use count() method
+	 List<Integer> al = new ArrayList<Integer>();
+		al.add(23);
+		al.add(54);
+		al.add(78);
+		Stream<Integer> openStream = al.stream();
+		Stream<Integer> filteredStream = openStream.filter(x->x>=25);
+		int filteredStreamCount = filteredStream.count();
+
+Sorted():How to process the stream elemenst using sorted()?
+	 if we want to order the processed stream in a ascending order then we can use sorted() method. if we want to do customized sorting then use 
+	 comparator
+	example:. 
+		List<Integer> al = new ArrayList<Integer>();
+		al.add(23);
+		al.add(54);
+		al.add(78);
+		Steam<Integer> sortedArrayListStream = al.stream().filter(x->x>=25).sorted();
+		sortedArrayListStream.forEach(x-> System.out.println(x));
+Custom Sorting: How to process the steam elements using sorted in Desending order?
+	example:. 
+		List<Integer> al = new ArrayList<Integer>();
+		al.add(23);										  |-->sort in desecending
+		al.add(54);										 /
+		al.add(78);										/
+		Steam<Integer> sortedArrayListStream = al.stream().filter(x->x>=25).sorted((i1,i2)->i2.compareTo(i1));
+		sortedArrayListStream.forEach(x-> System.out.println(x));
+
+min(): arrayList.stream().filter(x->x>=25).min((i1,i2)->i1.compareTo(i2)).get();
+max():arrayList.stream().filter(x->x>=25).max((i1,i2)->i1.compareTo(i2)).get();
+forEach():This method takes lambda expression as argument and apply that lambda expression to each element present in that stream
+toArray():Object[] intArry = arrayList.stream().filter(x->x>=25).toArray()
+	  for(Object o:intArry){
+		System.out.println(o);
+	 }
+of(): How to process elements using of()?
+	Stream concept is not applicable just for the collection its also applicable for "ANY GROUP OF VALUES" .Stream.of() method can take any group
+	of values and convert tehm to stream so that multiple stream operations can be applied to it
+	example: 
+		Stream.of(1,2,45,65,24,98,34).forEach(x->System.out.println(x));
+
+
+
+
+Angular:https://youtu.be/-jeoyDJDsSM
+========
+
+1)What is Angular? / What do you know about Angular?
+A: Angular is one of the most popular JavaScript frameworks developed and maintained by Google. It is an open-source front-end web framework based on 
+TypeScript. It is most suited for developing enterprise web applications because its code is reusable and maintainable.
+
+
+2) What are some powerful features integrated into Angular?
+ Angular integrates some powerful features like declarative templates, end to end tooling, dependency injection and various other best practices that
+ smoothens the development path
+
+3)What is the difference between AngularJS and Angular?
+		AngularJs 				Angular
+	i)AngularJS was the very first version 	     i) Angular 2 was initially released in 2016. There is nothing common between Angular2 and AngularJS 
+	initially released in 2010.			After that, Angular 6, Angular 7, Angular 8, Angular 9, and Angular 10 were released that are 
+							very similar to each other. These later versions are known as Angular.
+
+	ii)Angular does not components and directives. ii)Angular supports components and directives.
+	
+	iii)Does not support Dependency Injection	iii)Supports DI
+
+4)What are directives in Angular?
+A: Directives  are Typescript class which is declared with decorator @Directive.It tells the angular that how to change the style or behaviour of DOM 
+   element
+   Angular directives can be classified into three types: 
+	1)Component Directives: Components are special directives in Angular. They are the directive with a template.it is actually showing something in DOM, 
+	  hence we can say component is also a directive with a template (template or templateUrls).
+
+	2)Structure Directive: Structural directives are used to change the DOM layout by adding and removing DOM elements. 
+	  It basically changes the structure of the DOM
+
+	  Examples of structural directives are ngIf, ngFor, ngSwitch.
+
+	  *ngIf — adds or removes element from DOM.
+	  *ngFor — renders list of elements on every iteration.
+
+         All structural Directives are preceded by Asterix (*)symbol.
+
+	3)Attribute Directive: Attribute directives are used to change the appearance or behavior of an element
+
+	  Examples of attributes directives are ngStyle, ngClass, ngModel
+
+	  ngStyle — used to apply styles that will change the appearance.
+	  ngClass — used to apply CSS classes to change the appearance.
+
+5)What is Dependency Injection in Angular?
+A: Dependencies are services in Angular which have some specific functionality. Various components and directives in an application can need these 
+   functionalities of the service. Angular provides a smooth mechanism by which these dependencies are injected into components and directives.
+
+6)What is Data Binding in Angular?
+   Data-binding is a feature of Angular, which is used to provide a way to communicate between the component (Model) and its view (HTML template).
+  There are two ways of data-binding, one-way data binding and two-way data binding.
+   i)Onw way: Any changes in the component will directly reflect inside the HTML template but vice versa not possible
+   ii)two way: vice versa possible 
+
+7)What are  String interpolation and property binding in Angular?
+  Both are the examples of Data binding.
+  String Interpolation  is a one-way data-binding technique that is used to transfer the data from a component class(.ts) to an HTML template (view). 
+  It uses double curly braces{{}} to display the data from the component class to the view(HTML templete)
+  
+  property binding helps us to set values for properties of HTML templete by passing data from component class(.ts)
+
+8)what is Eager Loading,Lazy Loading and Pre-loading in Angular?
+  Eager Loading is used to load all feature modules before the start of application . It mainly used for small size applications
+  Lazy Loading is used to load all feature modues on demand after start of application. It mainly used for big size applications
+  Pre-loading is used to load specific features mudules that are likely to be used soon after application started. It is used for medium size applications
+
+9)what is component and modules in Angular?
+  componet help us to bind view and model.It is the place where we write binding code.where as module is logically a group of componets
+
+10)what is a decorator/meta data/Annotations/Data Annotations in Angular?
+   Decorator defines what kind of Angular class is it. For example, if you decorate "@component" then its says its an Angular component.
+   if you put "@NgModule" it becomes Angular module
+
+11)What is template in Angular?
+   Templete is an HTML view of Angular in which we can write angular syntaxes, we can use pipes,angular directives like expressions{{}},formGroup ,
+   ngModel and so on
+   There are 2 ways of defining template one is inline and other is a separate HTML file
+
+12)What is Angular Routing?
+  Routing is a simple collection which has mainly two things one is path/URL and 2nd one is when URL is called which component to load
+
+13)How to implement Routing in Angular?
+   i) First we need to define a collection in routing.ts file saying which URL will route to which component
+   ii)second one is we need to define the <router-outlet> in html file for where exactly that navigation will load
+   iii)third one is we need to define [routerLink] in html and need to give URL name. If we want to route from .ts file instead of html file then we 
+      use this.route.navigate(['/home'])

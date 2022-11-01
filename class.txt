@@ -1,0 +1,1570 @@
+kishore123
+https://www.youtube.com/playlist?list=PLd3UqWTnYXOlVCDK8tUIR6qT1l-EdjcEg -->jdbc by ratan durgasodt
+ create table orders(
+  2  orderno number(5) constraint orders_ordno_pk primary key,
+  3  price number(10,2),
+  4  quantity varchar2(15)
+  5  );
+
+Table created.
+
+SQL> create table customers(
+  2  custno number(5) constraint customers_custno_pk primary key,
+  3  custname varchar2(15),
+  4  custmobile number(10) constraint customers_nn not null,
+  5  orderno number(5),
+  6  constraint customers_ordno_fk foreign key(orderno) references orders(orderno)
+  7  );
+
+Table created.
+
+SQL> insert into orders values(100,250,'5kgs');
+
+1 row created.
+
+SQL> insert into orders values(101,258,'10kgs');
+
+1 row created.
+
+SQL> insert into orders values(103,300,'25kgs');
+
+1 row created.
+
+SQL> insert into orders values(104,20,'5kgs');
+
+1 row created.
+
+SQL> insert into orders values(105,350,'55kgs');
+
+1 row created.
+
+SQL> insert into customers values(1,'kishore',9999888823,100);
+
+1 row created.
+
+SQL> insert into customers values(2,'Mahesh',9999888824,101);
+
+1 row created.
+
+SQL> insert into customers values(3,'siva',9999882824,102);
+insert into customers values(3,'siva',9999882824,102)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (KISHORE.CUSTOMERS_ORDNO_FK) violated - parent
+key not found
+
+
+SQL> insert into customers values(3,'Rakesh',9939888824,103);
+
+1 row created.
+
+SQL> insert into customers values(4,'Rajesh',9999868824,104);
+
+1 row created.
+
+SQL> insert into customers values(5,'Raju',8999888824,105);
+
+1 row created.
+
+SQL> select * from orders;
+
+   ORDERNO      PRICE QUANTITY
+---------- ---------- ---------------
+       100        250 5kgs
+       101        258 10kgs
+       103        300 25kgs
+       104         20 5kgs
+       105        350 55kgs
+
+SQL> select * from customers;
+
+    CUSTNO CUSTNAME        CUSTMOBILE    ORDERNO
+---------- --------------- ---------- ----------
+         1 kishore         9999888823        100
+         2 Mahesh          9999888824        101
+         3 Rakesh          9939888824        103
+         4 Rajesh          9999868824        104
+         5 Raju            8999888824        105
+
+SQL> select a.orderno,b.custname,a.quantity,a.price,b.custmobile from orders a,customers b where a.orderno = b.orderno;
+
+   ORDERNO CUSTNAME        QUANTITY             PRICE CUSTMOBILE
+---------- --------------- --------------- ---------- ----------
+       100 kishore         5kgs                   250 9999888823
+       101 Mahesh          10kgs                  258 9999888824
+       103 Rakesh          25kgs                  300 9939888824
+       104 Rajesh          5kgs                    20 9999868824
+       105 Raju            55kgs                  350 8999888824
+
+SQL> commit;
+
+Commit complete.
+
+
+// joins(eqi,left,right)
+
+SQL> create table ctsemp(
+  2  empid number(6) constraint ctsemp_empid_pk primary key,
+  3  empname varchar2(15),
+  4  empsal number(10,2)
+  5  );
+
+Table created.
+
+SQL> create table ctsprojects(
+  2  projectid number constraint ctsprojects_pk primary key,
+  3  projectname varchar2(15),
+  4  empid number(6),
+  5  constraint ctsprojects_fk foreign key(empid) references ctsemp(empid)
+  6  );
+
+Table created.
+
+SQL> insert into ctsemp values(204320,'kishore',500);
+
+1 row created.
+
+SQL> insert into ctsemp values(204321,'sukumar',400);
+
+1 row created.
+
+SQL> insert into ctsemp values(204322,'pavani',700);
+
+1 row created.
+
+SQL> insert into ctsemp values(204323,'Ramya',900);
+
+1 row created.
+
+SQL> insert into ctsemp values(204324,'kishore',500);
+
+1 row created.
+
+SQL> insert into ctsemp values(204325,'Ravi kumar',500);
+
+1 row created.
+
+SQL> insert into ctsemp values(204326,'Sudhakar',800);
+
+1 row created.
+
+SQL> insert into ctsemp values(204327,'bhanu',700);
+
+1 row created.
+
+SQL> insert into ctsemp values(204328,'Ranjith',800);
+
+1 row created.
+
+SQL> insert into ctsemp values(204329,'Mouli',100);
+
+1 row created.
+
+SQL>
+SQL> insert into ctsprojects values(10,'AWS',204320);
+
+1 row created.
+
+SQL> insert into ctsprojects values(11,'AZURE',204321);
+
+1 row created.
+
+SQL> insert into ctsprojects values(12,'JAVA',204322);
+
+1 row created.
+
+SQL> insert into ctsprojects values(13,'DOT NET',204323);
+
+1 row created.
+
+SQL> insert into ctsprojects values(14,'PYTHON',204324);
+
+1 row created.
+
+SQL> select a.empid,a.empname,a.empsal,b.projectid,b.projectname from ctsemp a,ctsprojects b where a.empid =b.empid;
+
+     EMPID EMPNAME             EMPSAL  PROJECTID PROJECTNAME
+---------- --------------- ---------- ---------- ---------------
+    204320 kishore                500         10 AWS
+    204321 sukumar                400         11 AZURE
+    204322 pavani                 700         12 JAVA
+    204323 Ramya                  900         13 DOT NET
+    204324 kishore                500         14 PYTHON
+
+SQL> select a.empid,a.empname,a.empsal,b.projectid,b.projectname from ctsemp a,ctsprojects b where a.empid (+)=b.empid;
+
+     EMPID EMPNAME             EMPSAL  PROJECTID PROJECTNAME
+---------- --------------- ---------- ---------- ---------------
+    204320 kishore                500         10 AWS
+    204321 sukumar                400         11 AZURE
+    204322 pavani                 700         12 JAVA
+    204323 Ramya                  900         13 DOT NET
+    204324 kishore                500         14 PYTHON
+
+SQL> select a.empid,a.empname,a.empsal,b.projectid,b.projectname from ctsemp a,ctsprojects b where a.empid =b.empid(+);
+
+     EMPID EMPNAME             EMPSAL  PROJECTID PROJECTNAME
+---------- --------------- ---------- ---------- ---------------
+    204320 kishore                500         10 AWS
+    204321 sukumar                400         11 AZURE
+    204322 pavani                 700         12 JAVA
+    204323 Ramya                  900         13 DOT NET
+    204324 kishore                500         14 PYTHON
+    204329 Mouli                  100
+    204325 Ravi kumar             500
+    204328 Ranjith                800
+    204326 Sudhakar               800
+    204327 bhanu                  700
+
+10 rows selected.
+
+
+  1  declare
+  2     i number(2);
+  3  begin
+  4     i := 1;
+  5     while i<=10 loop
+  6             dbms_output.put_line('i = ' || i);
+  7             i := i + 1;
+  8     end loop;
+  9* end;
+SQL> /
+i = 1
+i = 2
+i = 3
+i = 4
+i = 5
+i = 6
+i = 7
+i = 8
+i = 9
+i = 10
+
+PL/SQL procedure successfully completed.
+
+
+SQL> begin
+  2     for i in 1..10 loop
+  3             dbms_output.put_line('i = '||i);
+  4     end loop;
+  5  end;
+  6  /
+i = 1
+i = 2
+i = 3
+i = 4
+i = 5
+i = 6
+i = 7
+i = 8
+i = 9
+i = 10
+
+PL/SQL procedure successfully completed.
+
+  1  begin
+  2     for i in reverse 1..10 loop
+  3             dbms_output.put_line('i = '||i);
+  4     end loop;
+  5* end;
+SQL> /
+i = 10
+i = 9
+i = 8
+i = 7
+i = 6
+i = 5
+i = 4
+i = 3
+i = 2
+i = 1
+
+PL/SQL procedure successfully completed.
+
+
+
+SQL> select * from person;
+
+NAME                   AGE G JOB                 SALARY
+--------------- ---------- - --------------- ----------
+kishore                 23 M software               200
+suresh                  21 M carpenter              200
+rani                    60 F doctor                 350
+a                       23 F software               240
+b                       23 F plumber                500
+c                       21 F home maker             400
+
+6 rows selected.
+
+
+  1  declare
+  2     Name person.name%Type;
+  3     age  person.age%Type;
+  4     sal  person.salary%Type;
+  5     cursor person_cur is
+  6             select name,age,salary from person;
+  7  begin
+  8     open person_cur;
+  9     loop
+ 10             fetch person_cur into Name,age,sal;
+ 11             exit when person_cur%rowcount >10 or person_cur%NotFound;
+ 12             dbms_output.put_line(Name ||' is having an age of ' || age || ' and earning an salary of ' || sal);
+ 13     end loop;
+ 14     close person_cur;
+ 15* end;
+SQL> /
+kishore is having an age of 23 and earning an salary of 200
+suresh is having an age of 21 and earning an salary of 200
+rani is having an age of 60 and earning an salary of 350
+a is having an age of 23 and earning an salary of 240
+b is having an age of 23 and earning an salary of 500
+c is having an age of 21 and earning an salary of 400
+
+PL/SQL procedure successfully completed.
+
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select empno,ename,job from emp where job = ANY(select job from emp where deptno = 30);
+
+     EMPNO ENAME      JOB
+---------- ---------- ---------
+      7566 JONES      MANAGER
+      7782 CLARK      MANAGER
+      7698 BLAKE      MANAGER
+      7844 TURNER     SALESMAN
+      7654 MARTIN     SALESMAN
+      7521 WARD       SALESMAN
+      7499 ALLEN      SALESMAN
+      7934 MILLER     CLERK
+      7900 JAMES      CLERK
+      7876 ADAMS      CLERK
+      7369 SMITH      CLERK
+
+11 rows selected.
+
+SQL>
+SQL> select empno,ename,hiredate from emp WHERE hiredate < ANY(select hiredate from emp where job = 'CLERK');
+
+     EMPNO ENAME      HIREDATE
+---------- ---------- ---------
+      7369 SMITH      17-DEC-80
+      7499 ALLEN      20-FEB-81
+      7521 WARD       22-FEB-81
+      7566 JONES      02-APR-81
+      7698 BLAKE      01-MAY-81
+      7782 CLARK      09-JUN-81
+      7844 TURNER     08-SEP-81
+      7654 MARTIN     28-SEP-81
+      7839 KING       17-NOV-81
+      7902 FORD       03-DEC-81
+      7900 JAMES      03-DEC-81
+      7934 MILLER     23-JAN-82
+      7788 SCOTT      09-DEC-82
+
+13 rows selected.
+
+SQL> select empno,ename,sal from emp where sal > ALL(select deptno from emp where comm is not null);
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      7369 SMITH             800
+      7900 JAMES             950
+      7876 ADAMS            1100
+      7654 MARTIN           1250
+      7521 WARD             1250
+      7934 MILLER           1300
+      7844 TURNER           1500
+      7499 ALLEN            1600
+      7782 CLARK            2450
+      7698 BLAKE            2850
+      7566 JONES            2975
+      7902 FORD             3000
+      7788 SCOTT            3000
+      7839 KING             5000
+
+14 rows selected.
+
+SQL> select empno,ename from emp where ename = ANY(select ename from emp where job = 'MANAGER');
+
+     EMPNO ENAME
+---------- ----------
+      7698 BLAKE
+      7782 CLARK
+      7566 JONES
+
+SQL> select empno,ename,sal from emp where sal >= ALL(select sal from emp where hiredate > '20-FEB-81');
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      7839 KING             5000
+
+SQL> select empno,ename,job from emp where empno <= ALL(select empno from emp where mgr=7698);
+
+     EMPNO ENAME      JOB
+---------- ---------- ---------
+      7499 ALLEN      SALESMAN
+      7369 SMITH      CLERK
+
+SQL> select  empno,ename,job from emp where mgr > ANY(select mgr from emp where job = 'SALESMAN');
+
+     EMPNO ENAME      JOB
+---------- ---------- ---------
+      7369 SMITH      CLERK
+      7782 CLARK      MANAGER
+      7566 JONES      MANAGER
+      7698 BLAKE      MANAGER
+      7876 ADAMS      CLERK
+      7934 MILLER     CLERK
+
+6 rows selected.
+-------------------------------------------------------------------------------------------------------------------------------------
+global & local variables:--
+------------------------
+
+case 1:
+-------
+declare
+outer_number1 number :=&o_num1;
+outer_number2 number := &o_num2;
+begin
+	dbms_output.put_line('outer block number1 is '||outer_number1);
+	dbms_output.put_line('outer block number2 is '||outer_number2);
+	declare
+		inner_number1 number :=&i_num1;
+		inner_number2 number :=&i_num2;
+	begin
+		dbms_output.put_line('inner block number1 is '||inner_number1);
+		dbms_output.put_line('inner block number2 is '||inner_number2);
+	end;
+end;
+
+Enter value for o_num1: 1
+old   2: outer_number1 number :=&o_num1;
+new   2: outer_number1 number :=1;
+Enter value for o_num2: 2
+old   3: outer_number2 number := &o_num2;
+new   3: outer_number2 number := 2;
+Enter value for i_num1: 3
+old   8: inner_number1 number :=&i_num1;
+new   8: inner_number1 number :=3;
+Enter value for i_num2: 4
+old   9: inner_number2 number :=&i_num2;
+new   9: inner_number2 number :=4;
+outer block number1 is 1
+outer block number2 is 2
+inner block number1 is 3
+inner block number2 is 4
+
+PL/SQL procedure successfully completed.
+
+case 2:
+-------
+declare
+outer_number1 number :=&o_num1;
+outer_number2 number := &o_num2;
+begin
+	dbms_output.put_line('outer block number1 is '||outer_number1);
+	dbms_output.put_line('outer block number2 is '||outer_number2);
+	declare
+		inner_number1 number :=&i_num1;
+		inner_number2 number :=&i_num2;
+	begin
+		dbms_output.put_line('outer block number1 is '||outer_number1);
+		dbms_output.put_line('outer block number2 is '||outer_number2);
+		dbms_output.put_line('inner block number1 is '||inner_number1);
+		dbms_output.put_line('inner block number2 is '||inner_number2);
+	end;
+end;
+
+SQL> /
+Enter value for o_num1: 1
+old   2: outer_number1 number :=&o_num1;
+new   2: outer_number1 number :=1;
+Enter value for o_num2: 2
+old   3: outer_number2 number := &o_num2;
+new   3: outer_number2 number := 2;
+Enter value for i_num1: 3
+old   8: inner_number1 number :=&i_num1;
+new   8: inner_number1 number :=3;
+Enter value for i_num2: 4
+old   9: inner_number2 number :=&i_num2;
+new   9: inner_number2 number :=4;
+outer block number1 is 1
+outer block number2 is 2
+outer block number1 is 1
+outer block number2 is 2
+inner block number1 is 3
+inner block number2 is 4
+
+PL/SQL procedure successfully completed.
+
+case 3:
+------
+declare
+outer_number1 number :=&o_num1;
+outer_number2 number := &o_num2;
+begin
+	dbms_output.put_line('outer block number1 is '||outer_number1);
+	dbms_output.put_line('outer block number2 is '||outer_number2);
+
+	declare
+		inner_number1 number :=&i_num1;
+		inner_number2 number :=&i_num2;
+	begin
+		dbms_output.put_line('inner block number1 is '||inner_number1);
+		dbms_output.put_line('inner block number2 is '||inner_number2);
+	end;
+
+	dbms_output.put_line('inner block number1 is '||inner_number1);
+	dbms_output.put_line('inner block number2 is '||inner_number2);
+end;
+
+
+                                                *
+ERROR at line 16:
+ORA-06550: line 16, column 49:
+PLS-00201: identifier 'INNER_NUMBER1' must be declared
+ORA-06550: line 16, column 1:
+PL/SQL: Statement ignored
+ORA-06550: line 17, column 49:
+PLS-00201: identifier 'INNER_NUMBER2' must be declared
+ORA-06550: line 17, column 1:
+PL/SQL: Statement ignored
+--------------------------------------------------------------------------------------------
+packages:-
+--------
+create or replace procedure display_empdata
+as
+cursor display_empdata_cur is select * from emp;
+begin
+for data in display_empdata_cur loop
+dbms_output.put_line(data.ename||' is having an emp id '||data.empno||' and working as '||data.job||' in the department number '||data.deptno);
+end loop;
+end;
+---------
+---------
+create or replace procedure insert_empdata(
+e_no in emp.empno%type,
+e_name in emp.ename%type,
+e_job in emp.job%type,
+e_mgr in emp.mgr%type,
+e_hiredate in emp.hiredate%type,
+e_sal in emp.sal%type,
+e_comm in emp.comm%type,
+e_deptno in emp.deptno%type
+) as
+begin
+insert into emp values(e_no,e_name,e_job,e_mgr,e_hiredate,e_sal,e_comm,e_deptno);
+commit;
+end;
+------------
+------------
+create or replace function total_empsal return NUMBER
+AS
+totsal number;
+begin
+select sum(sal) into totsal from emp;
+return totsal;
+end total_empsal;
+-------------
+-------------
+create or replace function get_empmgrname(
+e_id in  emp.empno%type
+) return varchar2
+as
+mgr_name emp.ename%type;
+begin
+select ename into mgr_name from emp where empno = (select mgr from emp where empno = e_id);
+return mgr_name;
+end get_empmgrname;
+---------------
+---------------
+create or replace package employee_package
+AS
+
+procedure display_empdata;
+
+procedure insert_empdata(
+e_no in emp.empno%type,
+e_name in emp.ename%type,
+e_job in emp.job%type,
+e_mgr in emp.mgr%type,
+e_hiredate in emp.hiredate%type,
+e_sal in emp.sal%type,
+e_comm in emp.comm%type,
+e_deptno in emp.deptno%type
+) ;
+
+function total_empsal return NUMBER;
+
+function get_empmgrname(
+e_id in  emp.empno%type
+) return varchar2;
+
+
+END employee_package;
+-------------------
+-------------------
+create or replace package body employee_package
+as
+
+procedure display_empdata
+as
+cursor display_empdata_cur is select * from emp;
+begin
+for data in display_empdata_cur loop
+dbms_output.put_line(data.ename||' is having an emp id '||data.empno||' and working as '||data.job||' in the department number '||data.deptno);
+end loop;
+end;
+
+procedure insert_empdata(
+e_no in emp.empno%type,
+e_name in emp.ename%type,
+e_job in emp.job%type,
+e_mgr in emp.mgr%type,
+e_hiredate in emp.hiredate%type,
+e_sal in emp.sal%type,
+e_comm in emp.comm%type,
+e_deptno in emp.deptno%type
+) as
+begin
+insert into emp values(e_no,e_name,e_job,e_mgr,e_hiredate,e_sal,e_comm,e_deptno);
+commit;
+end;
+
+function total_empsal return NUMBER
+AS
+totsal number;
+begin
+select sum(sal) into totsal from emp;
+return totsal;
+end total_empsal;
+
+function get_empmgrname(
+e_id in  emp.empno%type
+) return varchar2
+as
+mgr_name emp.ename%type;
+begin
+select ename into mgr_name from emp where empno = (select mgr from emp where empno = e_id);
+return mgr_name;
+end get_empmgrname;
+
+
+
+end employee_package;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+Associate Arrays or plsql tables or index by tables
+
+SET SERVEROUTPUT ON;
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF VARCHAR2(100) INDEX BY BINARY_INTEGER;
+EMPLOYEE_TABLE EMPLOYEE_TYPE;
+IDX NUMBER;
+BEGIN
+EMPLOYEE_TABLE(1):='SAI';
+EMPLOYEE_TABLE(2):='KISHORE';
+EMPLOYEE_TABLE(4):='PRIYA';
+EMPLOYEE_TABLE(6):='MANIDEEP';
+IDX := EMPLOYEE_TABLE.FIRST;
+WHILE IDX IS NOT NULL LOOP
+DBMS_OUTPUT.PUT_LINE('EMPLOYEE NAME IS '||EMPLOYEE_TABLE(IDX));
+IDX :=EMPLOYEE_TABLE.NEXT(IDX);
+END LOOP;
+END;
+ 16  /
+EMPLOYEE NAME IS SAI
+EMPLOYEE NAME IS KISHORE
+EMPLOYEE NAME IS PRIYA
+EMPLOYEE NAME IS MANIDEEP
+
+PL/SQL procedure successfully completed.
+------------------------------------------------------------------------------------------------------------
+Delete item from associate array 
+
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF VARCHAR2(100) INDEX BY BINARY_INTEGER;
+EMPLOYEE_TABLE EMPLOYEE_TYPE;
+IDX NUMBER;
+BEGIN
+EMPLOYEE_TABLE(1):='SAI';
+EMPLOYEE_TABLE(2):='KISHORE';
+EMPLOYEE_TABLE(4):='PRIYA';
+EMPLOYEE_TABLE(6):='MANIDEEP';
+
+--DELETING HERE
+EMPLOYEE_TABLE.DELETE(4);
+
+IDX := EMPLOYEE_TABLE.FIRST;
+WHILE IDX IS NOT NULL LOOP
+DBMS_OUTPUT.PUT_LINE('EMPLOYEE NAME IS '||EMPLOYEE_TABLE(IDX));
+IDX :=EMPLOYEE_TABLE.NEXT(IDX);
+END LOOP;
+END;
+
+EMPLOYEE NAME IS SAI
+EMPLOYEE NAME IS KISHORE
+EMPLOYEE NAME IS MANIDEEP
+
+PL/SQL procedure successfully completed.
+----------------------------------------------------------------------------------------------------------------
+NESTED Tables:
+
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF VARCHAR2(100);
+--INITILIZATION OF CONSTRUCTOR
+EMPLOYEE_TABLE EMPLOYEE_TYPE := EMPLOYEE_TYPE(); 
+IDX NUMBER;
+BEGIN
+EMPLOYEE_TABLE.EXTEND(4);
+EMPLOYEE_TABLE(1):='SAI';
+EMPLOYEE_TABLE(2):='KISHORE';
+EMPLOYEE_TABLE(3):='MAHAMKALI';
+-- EMPLOYEE_TABLE(6):='RAJU';  =>THROWS AN ERROR BCZ INDX SHOULD BE SEQUENCE IN NESTED TABLES AND NOTE TABLES ARE STROED IN DATABASE BUT ASSOCIATE ARE NOT STORED
+EMPLOYEE_TABLE(4):='RAJU';
+-- WE CAN DELETE ELEMENTS FROM NESTED JUST LIKE ASSOCIATED
+DBMS_OUTPUT.PUT_LINE('FIRST ELEMENT '||EMPLOYEE_TABLE.FIRST);
+DBMS_OUTPUT.PUT_LINE('FIRST ELEMENT '||EMPLOYEE_TABLE.LAST);
+
+IDX := EMPLOYEE_TABLE.FIRST;
+
+--RETERIVING ALL ELEMENTS FROM TABLE
+
+WHILE IDX IS NOT NULL LOOP
+DBMS_OUTPUT.PUT_LINE('EMPLOYEE NAME '||EMPLOYEE_TABLE(IDX));
+IDX :=EMPLOYEE_TABLE.NEXT(IDX);
+END LOOP;
+END;
+
+
+FIRST ELEMENT 1
+FIRST ELEMENT 4
+EMPLOYEE NAME SAI
+EMPLOYEE NAME KISHORE
+EMPLOYEE NAME MAHAMKALI
+EMPLOYEE NAME RAJU
+
+PL/SQL procedure successfully completed.
+----------------------------------------------------------------------------------------
+VARRAY :
+
+DECLARE
+TYPE EMPLOYEE_TYPE IS VARRAY(4) OF VARCHAR2(100);
+--INITILIZATION OF CONSTRUCTOR
+EMPLOYEE_TABLE EMPLOYEE_TYPE := EMPLOYEE_TYPE(); 
+IDX NUMBER;
+BEGIN
+EMPLOYEE_TABLE.EXTEND(4);
+EMPLOYEE_TABLE(1):='SAI';
+EMPLOYEE_TABLE(2):='KISHORE';
+EMPLOYEE_TABLE(3):='MAHAMKALI';
+-- EMPLOYEE_TABLE(6):='RAJU';  =>THROWS AN ERROR BCZ INDX SHOULD BE SEQUENCE IN VARRAY TABLES AND NOTE TABLES ARE STROED IN DATABASE BUT ASSOCIATE ARE NOT STORED
+EMPLOYEE_TABLE(4):='RAJU';
+
+-- WE CAN NOT DELETE ELEMENTS FROM NVARRAY TABLES
+--EMPLOYEE_TABLE.DELETE(3) =>THROWS AN ERROR
+
+DBMS_OUTPUT.PUT_LINE('FIRST ELEMENT '||EMPLOYEE_TABLE.FIRST);
+DBMS_OUTPUT.PUT_LINE('FIRST ELEMENT '||EMPLOYEE_TABLE.LAST);
+
+IDX := EMPLOYEE_TABLE.FIRST;
+
+--RETERIVING ALL ELEMENTS FROM TABLE
+
+WHILE IDX IS NOT NULL LOOP
+DBMS_OUTPUT.PUT_LINE('EMPLOYEE NAME '||EMPLOYEE_TABLE(IDX));
+IDX :=EMPLOYEE_TABLE.NEXT(IDX);
+END LOOP;
+END;
+-----------------------------------------------------------------------------------------------
+MULTI SET OPERATORS:
+
+MULTISET UNION--
+
+SET SERVEROUTPUT ON;
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF NUMBER;
+EMPLOYEE_TABLE1 EMPLOYEE_TYPE := EMPLOYEE_TYPE(1,2,3,4,5,6);
+EMPLOYEE_TABLE2 EMPLOYEE_TYPE := EMPLOYEE_TYPE(5,6,7,8,9,10);
+BEGIN
+EMPLOYEE_TABLE1 := EMPLOYEE_TABLE1 MULTISET UNION EMPLOYEE_TABLE2;
+FOR I IN EMPLOYEE_TABLE1.FIRST..EMPLOYEE_TABLE1.LAST LOOP
+DBMS_OUTPUT.PUT_LINE(EMPLOYEE_TABLE1(I));
+END LOOP;
+END;
+1
+2
+3
+4
+5
+6
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+
+MULTISET UNION DISTINCT:-
+
+SET SERVEROUTPUT ON;
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF NUMBER;
+EMPLOYEE_TABLE1 EMPLOYEE_TYPE := EMPLOYEE_TYPE(1,2,3,4,5,6);
+EMPLOYEE_TABLE2 EMPLOYEE_TYPE := EMPLOYEE_TYPE(5,6,7,8,9,10);
+BEGIN
+EMPLOYEE_TABLE1 := EMPLOYEE_TABLE1 MULTISET UNION DISTINCT  EMPLOYEE_TABLE2;
+FOR I IN EMPLOYEE_TABLE1.FIRST..EMPLOYEE_TABLE1.LAST LOOP
+DBMS_OUTPUT.PUT_LINE(EMPLOYEE_TABLE1(I));
+END LOOP;
+END;
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+MULTISET EXCEPT:-
+
+SET SERVEROUTPUT ON;
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF NUMBER;
+EMPLOYEE_TABLE1 EMPLOYEE_TYPE := EMPLOYEE_TYPE(1,2,3,4,5,6);
+EMPLOYEE_TABLE2 EMPLOYEE_TYPE := EMPLOYEE_TYPE(5,6,7,8,9,10);
+BEGIN
+EMPLOYEE_TABLE1 := EMPLOYEE_TABLE1 MULTISET EXCEPT  EMPLOYEE_TABLE2;
+FOR I IN EMPLOYEE_TABLE1.FIRST..EMPLOYEE_TABLE1.LAST LOOP
+DBMS_OUTPUT.PUT_LINE(EMPLOYEE_TABLE1(I));
+END LOOP;
+END;
+
+1
+2
+3
+4
+
+PL/SQL procedure successfully completed.
+
+MULTISET INTERSECT:-
+
+SET SERVEROUTPUT ON;
+DECLARE
+TYPE EMPLOYEE_TYPE IS TABLE OF NUMBER;
+EMPLOYEE_TABLE1 EMPLOYEE_TYPE := EMPLOYEE_TYPE(1,2,3,4,5,6);
+EMPLOYEE_TABLE2 EMPLOYEE_TYPE := EMPLOYEE_TYPE(5,6,7,8,9,10);
+BEGIN
+EMPLOYEE_TABLE1 := EMPLOYEE_TABLE1 MULTISET INTERSECT EMPLOYEE_TABLE2;
+FOR I IN EMPLOYEE_TABLE1.FIRST..EMPLOYEE_TABLE1.LAST LOOP
+DBMS_OUTPUT.PUT_LINE(EMPLOYEE_TABLE1(I));
+END LOOP;
+END;
+
+5
+6
+
+PL/SQL procedure successfully completed.
+
+--------------------------------------------------------------------------------------------------------------
+Triggers
+(Statement level trigger)->updated once  for entire transcation
+CREATE TABLE AUDIT_TABLE 
+ ( TABLE_NAME VARCHAR2(20), 
+USERID VARCHAR2(20), 
+OPERATION_DATE DATE, 
+OPERATION VARCHAR2(30)
+ );
+
+
+
+CREATE OR REPLACE TRIGGER EMPLOYEE_TRIGGER 
+AFTER INSERT OR UPDATE OR DELETE
+ON EMP
+DECLARE
+USER_NAME AUDIT_TABLE.USERID%TYPE;
+BEGIN
+SELECT USER INTO USER_NAME FROM DUAL;
+IF INSERTING THEN 
+INSERT INTO AUDIT_TABLE VALUES('EMP',USER_NAME,SYSDATE,'INSERT OPERATION WAS DONE');
+ELSIF UPDATING THEN
+INSERT INTO AUDIT_TABLE VALUES('EMP',USER_NAME,SYSDATE,'UPDATE OPERATION WAS DONE');
+ELSIF DELETING THEN
+INSERT INTO AUDIT_TABLE VALUES('EMP',USER_NAME,SYSDATE,'DELETE OPERATION WAS DONE');
+END IF;
+END;
+
+
+before insert operation ,the emp table looks like this
+
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      7234 KISHORE    SALESMAN        7521 01-FEB-80       2400         .1         10
+      7781 SAI        CLERK           7839 17-JUL-82       4500       1500         20
+
+16 rows selected.
+
+
+now im doing insert operation
+
+INSERT INTO EMP VALUES(7901,'MANIDEEP','ANALYST',7566,'15-MAY-80',1800,100,40);
+
+SQL> commit;
+
+Commit complete.
+-> one row was inserted--
+
+SQL> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      7234 KISHORE    SALESMAN        7521 01-FEB-80       2400         .1         10
+      7781 SAI        CLERK           7839 17-JUL-82       4500       1500         20
+      7901 MANIDEEP   ANALYST         7566 15-MAY-80       1800        100         40
+
+17 rows selected.
+
+now check audit table :-
+
+
+SQL> select * from AUDIT_TABLE;
+
+TABLE_NAME           USERID               OPERATION OPERATION
+-------------------- -------------------- --------- ------------------------------
+EMP                  KISHORE              13-OCT-21 INSERT OPERATION WAS DONE  -> Insert operation was updated here.
+
+--------------------------------------------------------------------------------------------------------------------------------
+ROW LEVEL TRIGGER:-
+
+CREATE OR REPLACE TRIGGER EMPLOYEE_RL_TRIGGER
+AFTER UPDATE
+ON EMP
+FOR EACH ROW
+DECLARE
+USERNAME AUDIT_TABLE.USERID%TYPE;
+BEGIN
+SELECT USER INTO USERNAME FROM DUAL;
+INSERT INTO AUDIT_TABLE VALUES('EMP',USERNAME,SYSDATE,'UPDATED IN EACH ROW');
+END;
+
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7788 SCOTT      ANALYST         7566 09-DEC-82       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      7234 KISHORE    SALESMAN        7521 01-FEB-80       2400         .1         10
+      7781 SAI        CLERK           7839 17-JUL-82       4500       1500         20
+      7901 MANIDEEP   ANALYST         7566 15-MAY-80       1800        100         40
+
+17 rows selected.
+
+I WANT TO UPDATE SALARY OF EMPLOYEE WHO ARE WORKING IN DEPTNP 20  TO 1900 (SAL).6 ROWS MUST BE UPDATED.LETS SEE
+
+
+SQL> UPDATE EMP SET SAL = 1900 WHERE DEPTNO = 20;
+
+6 rows updated.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM EMP;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7566 JONES      MANAGER         7839 02-APR-81       1900                    20
+      7788 SCOTT      ANALYST         7566 09-DEC-82       1900                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       1900                    20
+      7369 SMITH      CLERK           7902 17-DEC-80       1900                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 12-JAN-83       1900                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+      7234 KISHORE    SALESMAN        7521 01-FEB-80       2400         .1         10
+      7781 SAI        CLERK           7839 17-JUL-82       1900       1500         20
+      7901 MANIDEEP   ANALYST         7566 15-MAY-80       1800        100         40
+
+17 rows selected.
+
+LETS SEE THIS UPDATION IN AUDIT_TABLE
+
+
+SQL> SELECT * FROM AUDIT_TABLE;
+
+TABLE_NAME           USERID               OPERATION OPERATION
+-------------------- -------------------- --------- ------------------------------
+EMP                  KISHORE              13-OCT-21 UPDATED IN EACH ROW
+EMP                  KISHORE              13-OCT-21 UPDATED IN EACH ROW
+EMP                  KISHORE              13-OCT-21 UPDATED IN EACH ROW
+EMP                  KISHORE              13-OCT-21 UPDATED IN EACH ROW
+EMP                  KISHORE              13-OCT-21 UPDATED IN EACH ROW
+EMP                  KISHORE              13-OCT-21 UPDATED IN EACH ROW
+
+
+6 rows selected.
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+PIVOT CLAUSE:
+------------
+CREATE TABLE orders
+( order_id NUMBER NOT NULL,
+  customer_ref varchar2(50) NOT NULL,
+  order_date date,
+  product_id NUMBER,
+  quantity NUMBER,
+  CONSTRAINT orders_pk PRIMARY KEY (order_id)
+);
+
+
+INSERT ALL
+INTO orders values(50001,'SMITH','12-FEB-2020',10,5)
+INTO orders values(50002,'SMITH','14-APR-2020',20,9)
+INTO orders values(50003,'ANDERSON','23-JAN-2020',30,8)
+INTO orders values(50004,'ANDERSON','20-JUN-2020',40,6)
+INTO orders values(50005,'JONES','21-FEB-2021',10,6)
+INTO orders values(50006,'JONES','04-JUL-2021',20,4)
+INTO orders values(50007,'SMITH','05-OCT-2020',20,3)
+INTO orders values(50008,'SMITH','08-NOV-2021',10,5)
+INTO orders values(50009,'SMITH','28-DEC-2020',20,8)
+SELECT * FROM DUAL;
+
+
+SQL> SELECT * FROM ORDERS;
+
+  ORDER_ID CUSTOMER_REF                                       ORDER_DAT PRODUCT_ID   QUANTITY
+---------- -------------------------------------------------- --------- ---------- ----------
+     50001 SMITH                                              12-FEB-20         10          5
+     50002 SMITH                                              14-APR-20         20          9
+     50003 ANDERSON                                           23-JAN-20         30          8
+     50004 ANDERSON                                           20-JUN-20         40          6
+     50005 JONES                                              21-FEB-21         10          6
+     50006 JONES                                              04-JUL-21         20          4
+     50007 SMITH                                              05-OCT-20         20          3
+     50008 SMITH                                              08-NOV-21         10          5
+     50009 SMITH                                              28-DEC-20         20          8
+
+SELECT * FROM 
+(
+	SELECT CUSTOMER_REF,PRODUCT_ID
+	FROM ORDERS
+)
+PIVOT
+(
+	COUNT(PRODUCT_ID) FOR PRODUCT_ID IN (10,20,30)
+)
+ORDER BY CUSTOMER_REF;
+
+CUSTOMER_REF                                               10         20         30
+-------------------------------------------------- ---------- ---------- ----------
+ANDERSON                                                    0          0          1
+JONES                                                       1          1          0
+SMITH                                                       2          3          0
+
+SQL>
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+RANK & DENSE_RANK FUNCTIONS:
+
+SELECT EMPNO,ENMAE,SAL,RANK() OVER (ORDER BY SAL DESC) AS RANK FROM EMP;
+
+
+     EMPNO ENAME             SAL       RANK
+---------- ---------- ---------- ----------
+      7839 KING             5000          1
+      7698 BLAKE            2850          2
+      7782 CLARK            2450          3
+      7234 KISHORE          2400          4
+      7369 SMITH            1900          5
+      7902 FORD             1900          5
+      7788 SCOTT            1900          5
+      7566 JONES            1900          5
+      7781 SAI              1900          5
+      7876 ADAMS            1900          5
+      7901 MANIDEEP         1800         11
+      7499 ALLEN            1600         12
+      7844 TURNER           1500         13
+      7934 MILLER           1300         14
+      7654 MARTIN           1250         15
+      7521 WARD             1250         15
+      7900 JAMES             950         17
+
+17 rows selected.
+
+SELECT EMPNO,ENAME,SAL,DENSE_RANK() OVER (ORDER BY SAL DESC) AS RANK FROM EMP;
+
+
+     EMPNO ENAME             SAL       RANK
+---------- ---------- ---------- ----------
+      7839 KING             5000          1
+      7698 BLAKE            2850          2
+      7782 CLARK            2450          3
+      7234 KISHORE          2400          4
+      7369 SMITH            1900          5
+      7902 FORD             1900          5
+      7788 SCOTT            1900          5
+      7566 JONES            1900          5
+      7781 SAI              1900          5
+      7876 ADAMS            1900          5
+      7901 MANIDEEP         1800          6
+      7499 ALLEN            1600          7
+      7844 TURNER           1500          8
+      7934 MILLER           1300          9
+      7654 MARTIN           1250         10
+      7521 WARD             1250         10
+      7900 JAMES             950         11
+
+17 rows selected.
+
+SELECT DEPTNO,EMPNO,ENAME,SAL,RANK() OVER (PARTITION BY DEPTNO ORDER BY SAL DESC) AS RANK FROM EMP;
+
+
+    DEPTNO      EMPNO ENAME             SAL       RANK
+---------- ---------- ---------- ---------- ----------
+        10       7839 KING             5000          1
+        10       7782 CLARK            2450          2
+        10       7234 KISHORE          2400          3
+        10       7934 MILLER           1300          4
+        20       7369 SMITH            1900          1
+        20       7902 FORD             1900          1
+        20       7876 ADAMS            1900          1
+        20       7566 JONES            1900          1
+        20       7781 SAI              1900          1
+        20       7788 SCOTT            1900          1
+        30       7698 BLAKE            2850          1
+        30       7499 ALLEN            1600          2
+        30       7844 TURNER           1500          3
+        30       7654 MARTIN           1250          4
+        30       7521 WARD             1250          4
+        30       7900 JAMES             950          6
+        40       7901 MANIDEEP         1800          1
+
+17 rows selected.
+
+SELECT DEPTNO,EMPNO,ENAME,SAL,DENSE_RANK() OVER (PARTITION BY DEPTNO ORDER BY SAL DESC) AS RANK FROM EMP;
+
+
+
+    DEPTNO      EMPNO ENAME             SAL       RANK
+---------- ---------- ---------- ---------- ----------
+        10       7839 KING             5000          1
+        10       7782 CLARK            2450          2
+        10       7234 KISHORE          2400          3
+        10       7934 MILLER           1300          4
+        20       7369 SMITH            1900          1
+        20       7902 FORD             1900          1
+        20       7876 ADAMS            1900          1
+        20       7566 JONES            1900          1
+        20       7781 SAI              1900          1
+        20       7788 SCOTT            1900          1
+        30       7698 BLAKE            2850          1
+        30       7499 ALLEN            1600          2
+        30       7844 TURNER           1500          3
+        30       7654 MARTIN           1250          4
+        30       7521 WARD             1250          4
+        30       7900 JAMES             950          5
+        40       7901 MANIDEEP         1800          1
+
+17 rows selected.
+
+FIND TOP 5 EMPLOYEES USING RANK
+
+SELECT * FROM
+(SELECT DEPTNO,EMPNO,ENAME,SAL,DENSE_RANK() OVER (ORDER BY SAL DESC) AS RANK FROM EMP )
+WHERE RANK <=5; 
+
+
+
+    DEPTNO      EMPNO ENAME             SAL       RANK
+---------- ---------- ---------- ---------- ----------
+        10       7839 KING             5000          1
+        30       7698 BLAKE            2850          2
+        10       7782 CLARK            2450          3
+        10       7234 KISHORE          2400          4
+        20       7566 JONES            1900          5
+        20       7781 SAI              1900          5
+        20       7876 ADAMS            1900          5
+        20       7788 SCOTT            1900          5
+        20       7902 FORD             1900          5
+        20       7369 SMITH            1900          5
+
+10 rows selected.
+
+
+IF WE WANT TO REMOVE DUPLICANTS RANKS 
+
+SELECT DISTINCT RANK FROM
+(SELECT DEPTNO,EMPNO,ENAME,SAL,DENSE_RANK() OVER (ORDER BY SAL DESC) AS RANK FROM EMP )
+WHERE RANK <=5;
+
+
+      RANK
+----------
+         1
+         2
+         4
+         5
+         3
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+rowid & rownum:-
+rowid-> constant hexadecimal address and it never change its value
+rownum ->it changes uts values depends on how select retrived data from table;
+
+
+SQL> select rowid,rownum,a.* from emp a;
+
+ROWID                  ROWNUM      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+------------------ ---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+AAAE5hAAEAAAAFdAAA          1       7839 KING       PRESIDENT            17-NOV-81       5000                    10
+AAAE5hAAEAAAAFdAAB          2       7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+AAAE5hAAEAAAAFdAAC          3       7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+AAAE5hAAEAAAAFdAAD          4       7566 JONES      MANAGER         7839 02-APR-81       1900                    20
+AAAE5hAAEAAAAFdAAE          5       7788 SCOTT      ANALYST         7566 09-DEC-82       1900                    20
+AAAE5hAAEAAAAFdAAF          6       7902 FORD       ANALYST         7566 03-DEC-81       1900                    20
+AAAE5hAAEAAAAFdAAG          7       7369 SMITH      CLERK           7902 17-DEC-80       1900                    20
+AAAE5hAAEAAAAFdAAH          8       7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+AAAE5hAAEAAAAFdAAI          9       7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+AAAE5hAAEAAAAFdAAJ         10       7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+AAAE5hAAEAAAAFdAAK         11       7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+AAAE5hAAEAAAAFdAAL         12       7876 ADAMS      CLERK           7788 12-JAN-83       1900                    20
+AAAE5hAAEAAAAFdAAM         13       7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+AAAE5hAAEAAAAFdAAN         14       7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+AAAE5hAAEAAAAFeAAA         15       7234 KISHORE    SALESMAN        7521 01-FEB-80       2400         .1         10
+AAAE5hAAEAAAAFeAAB         16       7781 SAI        CLERK           7839 17-JUL-82       1900       1500         20
+AAAE5hAAEAAAAFeAAD         17       7901 MANIDEEP   ANALYST         7566 15-MAY-80       1800        100         40
+
+17 rows selected.
+
+select rowid,rownum,a.* from emp a where deptno = 10;
+
+
+ROWID                  ROWNUM      EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+------------------ ---------- ---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+AAAE5hAAEAAAAFdAAA          1       7839 KING       PRESIDENT            17-NOV-81       5000                    10
+AAAE5hAAEAAAAFdAAC          2       7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+AAAE5hAAEAAAAFdAAN          3       7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+AAAE5hAAEAAAAFeAAA          4       7234 KISHORE    SALESMAN        7521 01-FEB-80       2400         .1         10
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FLASHBACK:-
+
+SQL> SHOW RECYCLEBIN;
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME
+---------------- ------------------------------ ------------ -------------------
+CTSEMP           BIN$pQyGpIJoQmukQoVLtZMelg==$0 TABLE        2021-10-13:23:24:43
+CTSPROJECTS      BIN$3MTVrnf7TYungif2RFi4YQ==$0 TABLE        2021-10-04:15:07:39
+CUSTOMER         BIN$0XweBdcETryd1aTqzTQsPA==$0 TABLE        2021-10-04:10:56:21
+CUSTOMERS        BIN$PGBIka9zRoqmgZTJ+6zUmA==$0 TABLE        2021-10-04:14:08:01
+CUSTOMERS        BIN$O1TT67dmT2C4nKO6r/xbCQ==$0 TABLE        2021-10-04:12:41:39
+CUSTOMERS        BIN$OgV/tcPHQQO3p9GZPoDpKg==$0 TABLE        2021-10-04:11:56:37
+EMPLOYEES        BIN$kmuPZyIHQtK45J3F5IpURg==$0 TABLE        2021-10-03:12:47:01
+EMPLOYEES_COPY   BIN$QdvCR0eCTdO5E9X6kQEDmw==$0 TABLE        2021-10-03:12:57:00
+EMPLOYEES_COPY   BIN$NqHN/4RaTYaLr6LSwLcHAA==$0 TABLE        2021-10-03:12:55:25
+EMPLOYEES_COPY   BIN$dF3BSWqcSFKdX21vD6lImw==$0 TABLE        2021-10-03:12:48:44
+ORDERS           BIN$oocDLTVmRZCJf8HBc8DfVw==$0 TABLE        2021-10-13:21:36:14
+ORDERS           BIN$nr+RauR6TzKzEmT0EfcMLQ==$0 TABLE        2021-10-04:14:08:07
+ORDERS           BIN$D1+8kukQTzGGbeSzb1VaAQ==$0 TABLE        2021-10-04:12:47:50
+ORDERS           BIN$u5WIoTQGS5S+1QlOtpb6cQ==$0 TABLE        2021-10-04:12:41:33
+ORDERS           BIN$lJ7BMmOnSH6Eic4hge9dSA==$0 TABLE        2021-10-04:11:56:28
+SAMPLE           BIN$NLQN7KR0RLqXJZO2FpeMww==$0 TABLE        2021-10-03:12:59:40
+SAMPLE           BIN$Z2A2el/ZQyGFvhP2oLooCQ==$0 TABLE        2021-10-02:21:39:43
+SAMPLE           BIN$VraDacqsRuGJhHC2poWw2g==$0 TABLE        2021-10-02:21:27:31
+SAMPLE           BIN$LvAiRJ4cT8SGevG5/e28kA==$0 TABLE        2021-10-02:21:20:01
+SAMPLE           BIN$G5GNV3pQQCyUQU+Kwy4+Lw==$0 TABLE        2021-10-02:21:14:01
+SAMPLE           BIN$oSFyqVC1QQ+GhdEs0eW9rw==$0 TABLE        2021-10-02:21:10:36
+SAMPLE           BIN$VXsMAd70Q6iU15PfacOQsg==$0 TABLE        2021-10-02:21:04:07
+SAMPLE           BIN$jIV8sdCoRlivjyRnrFuLIg==$0 TABLE        2021-10-02:20:44:26
+STUDENT          BIN$uRVDjLcGTCOpqYIBji4vCA==$0 TABLE        2021-10-03:00:05:11
+STUDENTS         BIN$ZELwO+NhSBKTdAcVvWewhg==$0 TABLE        2021-10-02:20:27:41
+
+SQL> SELECT * FROM CTSEMP;
+
+SELECT * FROM CTSEMP
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> FLASHBACK TABLE CTSEMP TO BEFORE DROP;
+
+Flashback complete.
+
+SQL> SELECT * FROM CTSEMP;
+
+     EMPID EMPNAME             EMPSAL
+---------- --------------- ----------
+    204320 kishore                500
+    204321 sukumar                400
+    204322 pavani                 700
+    204323 Ramya                  900
+    204324 kishore                500
+    204325 Ravi kumar             500
+    204326 Sudhakar               800
+    204327 bhanu                  700
+    204328 Ranjith                800
+    204329 Mouli                  100
+
+10 rows selected.
+
+IF WE WANT TO DELETE TABLES PERMANENTLY FROM RECYCLEBIN ,WE HAVE TO USE PURGE COMMAND INTRODUCED IN 10G
+
+SQL> PURGE TABLE CTSEMP;
+
+Table purged.
+
+SQL> SHOW RECYCLEBIN;
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME
+---------------- ------------------------------ ------------ -------------------
+CTSPROJECTS      BIN$3MTVrnf7TYungif2RFi4YQ==$0 TABLE        2021-10-04:15:07:39
+CUSTOMER         BIN$0XweBdcETryd1aTqzTQsPA==$0 TABLE        2021-10-04:10:56:21
+CUSTOMERS        BIN$PGBIka9zRoqmgZTJ+6zUmA==$0 TABLE        2021-10-04:14:08:01
+CUSTOMERS        BIN$O1TT67dmT2C4nKO6r/xbCQ==$0 TABLE        2021-10-04:12:41:39
+CUSTOMERS        BIN$OgV/tcPHQQO3p9GZPoDpKg==$0 TABLE        2021-10-04:11:56:37
+EMPLOYEES        BIN$kmuPZyIHQtK45J3F5IpURg==$0 TABLE        2021-10-03:12:47:01
+EMPLOYEES_COPY   BIN$QdvCR0eCTdO5E9X6kQEDmw==$0 TABLE        2021-10-03:12:57:00
+EMPLOYEES_COPY   BIN$NqHN/4RaTYaLr6LSwLcHAA==$0 TABLE        2021-10-03:12:55:25
+EMPLOYEES_COPY   BIN$dF3BSWqcSFKdX21vD6lImw==$0 TABLE        2021-10-03:12:48:44
+ORDERS           BIN$oocDLTVmRZCJf8HBc8DfVw==$0 TABLE        2021-10-13:21:36:14
+ORDERS           BIN$nr+RauR6TzKzEmT0EfcMLQ==$0 TABLE        2021-10-04:14:08:07
+ORDERS           BIN$D1+8kukQTzGGbeSzb1VaAQ==$0 TABLE        2021-10-04:12:47:50
+ORDERS           BIN$u5WIoTQGS5S+1QlOtpb6cQ==$0 TABLE        2021-10-04:12:41:33
+ORDERS           BIN$lJ7BMmOnSH6Eic4hge9dSA==$0 TABLE        2021-10-04:11:56:28
+SAMPLE           BIN$NLQN7KR0RLqXJZO2FpeMww==$0 TABLE        2021-10-03:12:59:40
+SAMPLE           BIN$Z2A2el/ZQyGFvhP2oLooCQ==$0 TABLE        2021-10-02:21:39:43
+SAMPLE           BIN$VraDacqsRuGJhHC2poWw2g==$0 TABLE        2021-10-02:21:27:31
+SAMPLE           BIN$LvAiRJ4cT8SGevG5/e28kA==$0 TABLE        2021-10-02:21:20:01
+SAMPLE           BIN$G5GNV3pQQCyUQU+Kwy4+Lw==$0 TABLE        2021-10-02:21:14:01
+SAMPLE           BIN$oSFyqVC1QQ+GhdEs0eW9rw==$0 TABLE        2021-10-02:21:10:36
+SAMPLE           BIN$VXsMAd70Q6iU15PfacOQsg==$0 TABLE        2021-10-02:21:04:07
+SAMPLE           BIN$jIV8sdCoRlivjyRnrFuLIg==$0 TABLE        2021-10-02:20:44:26
+STUDENT          BIN$uRVDjLcGTCOpqYIBji4vCA==$0 TABLE        2021-10-03:00:05:11
+STUDENTS         BIN$ZELwO+NhSBKTdAcVvWewhg==$0 TABLE        2021-10-02:20:27:41
+SQL>
+
+IF WE WANT TO DROP AND DELETE PERMENENTELY ,USE BELOW QUERY
+
+DROP TABLE CTSEMP PURGE;
+------------------------------------------------------------------------------------------------------------------------------------------------
+TIMESTAMP & FLASHBACK QUERY:-
+
+IF WE WANT TO SEE TABLE DATA BEFORE SOME DAYS,MONTHS,MINUTES,SECONDS,YEARS WE CAN USE TIMESTAMP;
+
+
+-- THIS WILL SHOW DATA FROM 5 DAYS BACK IN EMP TABLE
+
+SELECT * FROM EMP_COPY 
+AS OF TIMESTAMP(SYSDATE - INTERVAL '5' DAY);
+
+
+IF WE WANT TO RESTORE 5 DAYS BACK EMP TABLE DATA WE CAN GO FOR FLASHBACK QUERY AS FOLLOWS
+
+--FLASHBACK QUERY
+
+INSERT INTO EMP_COPY
+SELECT * FROM EMP_COPY 
+AS OF TIMESTAMP(SYSDATE - INTERVAL '5' DAY);
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+CREATING OBJECT:
+
+CREATE TYPE EMP_ROW AS OBJECT
+(
+	E_NO NUMBER,
+	E_NAME VARCHAR2(10),
+	E_SAL NUMBER(10,2)
+);
+
+CREATE TYPE EMPtable IS TABLE OF EMP_ROW;
+
+TABLE FUNCTION:-
+--------------
+CREATE OR REPLACE FUNCTION FETCH_EMP_TABLEtype(DptNO NUMBER) RETURN EMPtable AS
+
+table_var  EMPtable := EMPtable();
+
+begin
+
+for c in (select empno,ename,sal from emp where deptno = DptNO) loop
+table_var.extend;
+table_var(table_var.LAST) := EMP_ROW(c.empno,c.ename,c.sal);
+end loop;
+return table_var;
+end;
+
+
+
+
+SQL> select empno,ename,sal from emp where deptno =10;
+
+     EMPNO ENAME             SAL
+---------- ---------- ----------
+      7839 KING             5000
+      7782 CLARK            2450
+      7934 MILLER           1300
+      7234 KISHORE          2400
+
+
+
+
+SQL> select * from TABLE(FETCH_EMP_TABLEtype(10));
+
+      E_NO E_NAME          E_SAL
+---------- ---------- ----------
+      7839 KING             5000
+      7782 CLARK            2450
+      7934 MILLER           1300
+      7234 KISHORE          2400
+
+PIPELINED FUNCTION:-IT WONT STORE DATA BUT WHENEVR DATA PROCESSED IT WILL SEND IT OUT.
+-----------------
+
+CREATE OR REPLACE FUNCTION FETCH_EMP_TABLEtype_PIPE(DptNO NUMBER) RETURN EMPtable PIPELINED AS
+
+table_var  EMPtable := EMPtable();
+
+begin
+
+for c in (select empno,ename,sal from emp where deptno = DptNO) loop
+table_var.extend;
+PIPE ROW(EMP_ROW(c.empno,c.ename,c.sal));
+end loop;
+return table_var;
+end;
+
+
+
+https://www.interviewsansar.com/sql-practice-test-queries-on-employee-data-in-relational-table/
+
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class EmployeeData {
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException{
+		// TODO Auto-generated method stub
+		
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		
+		Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","061998");
+		
+		Statement statement = connection.createStatement();
+		
+		String q1 = "select * from person";
+		ResultSet rs =statement.executeQuery(q1);
+		
+		while(rs.next()) {
+			System.out.println(rs.getString(1)+" "+rs.getInt(2)+" "+rs.getString(3)+" "+rs.getString(4)+" "+rs.getInt(5));
+		}
+		
+		
+		connection.close();
+	}
+
+}
+
+https://www.softwaretestinghelp.com/oracle-interview-questions-part1/ 
+UC-9e50cd6f-9ef9-4d6d-8475-10e1ccc33e03
+
+MASTER PEGA (40 HRS) - A COMPLETE GUIDE TO SENIOR ARCHITECT!
+Pega Certified System Architect 8.4
+
+
+https://youtu.be/E5kXA9aAfuM --> oracle virtual box install and linux install
+
+https://www.youtube.com/playlist?list=PLlI3peB1V-roPxwiWXBLSThjS_e2A7XPS -> oracle EBS DBA
+https://learn.oracle.com/ols/course/introduction-to-oracle-database/38560/79913/110253 -->oracle database explorer
+https://www.learnshell.org/en/Basic_Operators
+https://www.guru99.com/introduction-to-shell-scripting.html
+https://ocptechnology.com/how-to-install-oracle-12c-r1-on-oracle-linux-7-step-by-step/
+https://www.youtube.com/playlist?list=PL5tF2YqkWwvviGmxbiCDlb287Bitx3hrB  --> java spring
+https://www.youtube.com/playlist?list=PL5tF2YqkWwvsnaBLRcKwtU3IOa1NpK_Pi --> adv java

@@ -1,0 +1,344 @@
+React is an efficient, flexible, and open-source JavaScript library that allows developers to the creation of simple, fast, and 
+scalable web applications. Jordan Walke, a software engineer who was working for Facebook created React.
+
+features of React are:
+It supports server-side rendering.
+It will make use of the virtual DOM rather than real DOM (Data Object Model) as RealDOM manipulations are expensive.
+It uses reusable or composable UI components for developing the view
+It follows unidirectional data binding or data flow
+
+useState() is a React Hook that allows us  to have state variables in functional components.
+
+useEffect() is a Hook that tells React that your component needs to do something after render.
+
+what are keys in react?
+-Keys are generally used for displaying a list of data coming from an API
+-With keys, React has an idea of which particular element was deleted, edited, and added.
+-Without keys, React does not understand the order or uniqueness of each element.
+
+
+JSX stands for JavaScript XML. It allows us to write HTML code inside JavaScript and place them in the DOM without using functions like 
+appendChild( ) or createElement( ).
+
+Functional components are nothing but JavaScript functions which can be declared using an arrow function or the function keyword.
+
+Class components are simple classes that made up of multiple functions that add functionality to the application.
+
+Props are known as properties it can be used to pass data from one component to another. Props cannot be modified, read-only, and Immutable.
+
+The state is a local data storage that is local to the component only and cannot be passed to other components.
+
+virtual DOM is a concept where a virtual representation of the real DOM is kept inside the memory and is synced
+with the real DOM by a library such as ReactDOM.
+
+WHY Virtual DOM?
+DOM manipulation is an integral part of any web application, but DOM manipulation is quite slow when compared to other operations in JavaScript. 
+The efficiency of the application gets affected when several DOM manipulations are being done.
+To address the problem of inefficient updating, the react team introduced the concept of virtual DOM.
+
+
+React Hooks are the built-in functions that permit developers for using the state and lifecycle methods within React components. 
+These are newly added features made available in React 16.8 version. 
+Each lifecycle of a component is having 3 phases which include mount, unmount, and update. Along with that, components have properties and states.
+
+
+
+IMPORTANCE OF HOOKS:
+
+before React version 16.8, it required a class component for managing the state of a component. 
+But now using the useState hook, we can keep the state in a functional component
+
+
+A Custom Hook is a function in Javascript whose name begins with ‘use’ and which calls other hooks. It is a part of React v16.8 hook update.
+The disadvantage of Custom Hooks is it cannot be used inside of the classes
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+JDBC:
+
+JDBC is an Application Programming Interface(API) for Java, which is helpful for interaction with the database and for executing the SQL query.
+
+Components of JDBC:
+JDBC API:By using this, applications are able to execute SQL statements, retrieve results and make updation to the database.
+JDBC DriverManager: It is the class in JDBC API. It loads the JDBC driver in a Java application for establishing a connection with the database.
+JDBC Test suite: It is used to test the operations like insertion, deletion, updation etc., being performed by JDBC Drivers.
+JDBC-ODBC bridge drivers: It will connect database drivers to the database. It interprets JDBC method call to the ODBC function call
+
+ResultSet is an interface which represents the database result set, which is obtained after the execution of SQL query using Statement objects.
+RowSet is an object which stores data in the form of table so thats why  it is  more flexible and easier to use than a result set.
+
+JDBC driver is a software component having various classes and interfaces, that enables the Java application to interact with a database.
+
+Type 4 driver/Thin driver  is the fastest driver for localhost and remote connections because it directly interacts 
+with the database by converting the JDBC calls into vendor-specific protocol calls
+
+BLOB data type is used to store the images,audio,videos into  the database.
+
+CLOB data type is used to store the files in the database.
+
+Stored procedure is a group of SQL queries that are executed as a single logical unit to perform a specific task.
+Three types of parameters are provided in the stored procedures are in,out,in/out
+
+ODBC(Open Database Connectivity)	                  JDBC(Java Database Connectivity)
+-----------------------------------------------------     ------------------------------------------
+ODBC can be used for languages like C, C++, Java, etc.	  JDBC is used only for the Java language
+
+it is platform dependent                                  it is platform independent
+ODBC is procedural.					  JDBC is Object Oriented.
+
+
+------------------------------------------------------------------------------------------------------------------------
+JSP stands for Java Server Pages. it  is used to create dynamic web pages in the form of HyperText Markup Language (HTML).It is an an extension 
+to the Servlet Technology
+
+advantages of using JSP:
+------------------------
+-JSP pages can be used in combination with servlets
+-JSP supports both scripting and element-based dynamic content
+
+types of tags with Java Server Pages (JSP)?
+The three types of elements/tags with Java Server Pages (JSP) are directives, declarations,scriptlets and expressions.
+Directives:it is used to import packages,to define error handling pages and session information of JSP Page
+----------
+<%@page language="java" import="java.sql.*, java.util.*" %>
+<%@page language="java" session="true" errorPage="error.jsp"%>
+Declarations: it is used to define variables and declarations in JSP
+------------
+<%!
+
+int radius = 7; 
+double pi = 3.1415;
+
+%>
+
+Scriptlets:This is where the important Java code for JSP page is written.
+-----------
+<%
+	String id;
+        id = request.getParameter("id");
+	sessionEJB.addClient(id);
+ %>
+
+
+Expressions:If we want to show some value, we need to put it in between these tags.
+-----------
+<%!
+
+double radius = 7; 
+double pi = 22/7;
+double area()
+{
+    return pi*radius*radius;
+}
+
+%>
+
+<html>
+  <body>
+	Area of circle is <%= area() %>
+ </body>
+</html>
+
+
+
+
+JSP Standard Tag Library is a library of predefined tags which makes JSP Development very easy
+
+properties of JSTL:
+-Easier for humans to read and easier for computers to understand.
+- JSTL Expression language handles JavaBean code very easily.
+
+How many tags are provided in JSTL?
+
+core tags
+sql tags
+xml tags
+internationalization tags
+functions tags
+
+
+
+
+
+What is MVC in JSP?
+
+In MVC,
+
+M stands for Model
+V stands for View
+C stands for the controller.
+It is an architecture that separates business logic, presentation, and data. In this, the flow starts from the view layer, 
+where the request is raised and processed in the controller layer. This is then sent to the model layer to insert data and 
+get back the success or failure message.
+
+Which methods are used for reading form data using JSP?
+
+getParameter() − To get the value of a form parameter, call the request.getParameter() method.
+getParameterValues() − If a parameter appears more than once and it returns multiple values, call this method.
+getParameterNames() − This method is used if, in the current request, you want a complete list of all parameters.
+getInputStream() − This method is used for reading binary data streams from the client
+
+What are the life-cycle methods for a JSP?
+jspInit()
+_jspService()
+jspDestroy()
+
+
+
+JSP provides nine implicit objects by default. They are as follows:
+response,request,out,page,pageContext,exception,config,session,application
+
+What do you mean by Context Initialization Parameters?
+
+Context Initialization Parameters are the Initializing Parameters for the whole application. They are not specific to any Servlet or a JSP. 
+It is specified using the following syntax in a web.xml file.
+<context-param>  
+    <param-name>parametername</param-name>  
+    <param-value>parametervalue</param-value>  
+</context-param>
+
+What are the Literals used in JSP?
+Null,Boolean,String,Integer,Float
+
+Mention the scope values for <jsp.useBean> tag.
+There are mainly four scope values available for <jsp.useBean> tag:   page,request,application,session
+
+Include Directive is preffered for static pages and page size can be increased in run time
+Include action is preffered for dynamic pages and page size is fixed.
+
+
+How can you include the results of another page?
+The results of another page can be included by using the following methods:
+
+Include Directive
+Include Action
+-------------------------------------------------------------------------------------------
+
+Spring Core:
+
+The IoC container is responsible to instantiate, configure and assemble the objects. The IoC container gets informations from the XML file 
+and works accordingly
+
+https://www.youtube.com/watch?v=0-gUrk7QTME --spring boot and microservices road map
+
+oracle path:C:\oraclexe\app\oracle\product\11.2.0\server\bin
+
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin@localhost:1521:xe
+spring.datasource.username=kishore
+spring.datasource.password=199806
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.OracleDialect
+spring.jpa.hibernate.ddl-auto=update
+
+https://youtu.be/MXNYWjy_xKg
+https://cognizant.udemy.com/course/microservices-with-java-spring-boot-spring-cloud-eureka-api-gateway/
+https://cognizant.udemy.com/course/spring-boot-microservices-and-spring-cloud/
+
+https://youtu.be/VAmntTPebKE --microservices deploy in kumbernet cluster nyc video
+https://youtu.be/zvR-Oif_nxg --spring boot excellent video 10 hrs
+https://youtu.be/lXqqhyCPWC0 --kubernets 3hrs video
+https://youtu.be/7xvf38lClY8 --aws ecs check this
+https://youtu.be/Tg2krHXHzBc --docker install pull springboot run springboot
+
+
+npm install -g typescript
+plugins -> atom material icons
+npm install -g @angular/cli
+ng new first-project
+cd first-project
+ng serve
+ng g c component-name
+
+
+Go to microservice folder from cmd
+run below command:
+	mvn clean install -->this is used to make .jar file ,which is available in target folder
+we got spring-boot-demo.jar
+Go to folder where docker file exist
+docker build -t spring-boot-demo.jar .
+docker images ls
+docker run -p 9000:8000 spring-boot-demo.jar --where 9000 is docker container port & 8000 is local host port(optional)
+login to docker hub from cmd promt as follows
+docker login
+username:mahamkali
+password:Madhavi198102@
+Login successed
+docker images ls
+docker tag spring-boot-demo.jar mahamklai/spring-boot-demo.jar
+docker images ls
+docker push mahamkali/spring-boot-demo.jar
+check in docker hub whether it is pushed or not
+if we want to pull image from docker hub
+	docker pull mahamkali/spring-boot-demo.jar
+if we want to run docker image which is pulled from docker hub  to local machine as 
+	docker run -p 9000:8000 mahamkali/spring-boot-demo.jar
+	
+
+
+role name: AWSCodePipelineServiceRole-us-east-1-eurekaserver-pipeline
+codebuild-eurekaserver-build-service-role
+
+
+https://www.technologytothepoint.com/2022/06/1z0-1105-22-Certification-Exam-Notes.html?m=1
+
+https://www.youtube.com/watch?v=iUHjq9llIxc&list=PLs1OTbu_PCHpHhMTWI28XVC5-uKwgQvGn
+
+
+
+second lab aws project work:
+-----------------------------
+
+user name: 30cdehonorsaws0311-at-860061945305
+password: MOddjs6y6ojqSFq5LxJ4ALX+G3rte5HGQk1Cd8mHqdk=
+
+eureka-server-container
+860061945305.dkr.ecr.ap-southeast-2.amazonaws.com/kishore-ecr-repository:eureka-server
+eureka-server/taskdefinition.json
+
+authorization-service-container
+860061945305.dkr.ecr.ap-southeast-2.amazonaws.com/kishore-ecr-repository:authorization-service
+authorization-service/taskdefinition.json
+
+pensioner-detail-service-container
+860061945305.dkr.ecr.ap-southeast-2.amazonaws.com/kishore-ecr-repository:pensioner-detail-service
+pensioner-detail-service/taskdefinition.json
+
+
+pension-disbursement-service-container
+860061945305.dkr.ecr.ap-southeast-2.amazonaws.com/kishore-ecr-repository:pension-disbursement-service
+pension-disbursement-service/taskdefinition.json
+
+
+process-pension-service-container
+860061945305.dkr.ecr.ap-southeast-2.amazonaws.com/kishore-ecr-repository:process-pension-service
+process-pension-service/taskdefinition.json
+
+runtime:18
+
+
+1)select existing pipeline role
+2)add mentioned 4 polices to it
+3)select existing codebuild role
+4)add mentioned 4 polices to it
+5)now create new codepipeline
+6)select existing role
+7)give previous existing pipeline role ARN url  and existing codebuild role ARN url while creating  new codepipeline
+8)deployment completed
+
+https://git03.iiht.tech/kishore/2043202_pensionmanagementsystem
+
+auth-lb-1555137055.ap-southeast-2.elb.amazonaws.com/swagger-ui.html#/ 
+pensioner-lb-1551286522.ap-southeast-2.elb.amazonaws.com/swagger-ui.html#/ 
+disburse-lb-29218393.ap-southeast-2.elb.amazonaws.com/swagger-ui.html#/ 
+process-lb-1938012374.ap-southeast-2.elb.amazonaws.com/swagger-ui.html#/ 
+
+
+
+Logging in spring boot is basically an API that provides tracing out of information along with a recording of any critical failure that might occur
+ in the application during its run.
+
+ JWT, or JSON Web Token, is an open standard used to share security information between two parties — a client and a server.
+
+cross origin: Annotation for permitting cross-origin requests on specific handler classesand/or handler methods.
+Processed if an appropriate HandlerMappingis configured. 
+

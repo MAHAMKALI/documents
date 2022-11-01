@@ -1,0 +1,162 @@
+cdbasupport@cognizant.com
+Kbace321
+https://www.aclnz.com/apps-dba
+https://authenticator.pingone.com/pingid/ppm/auth
+cat /etc/*release*
+Oracle Linux Server release 7.9
+----------------------------------------------------------
+
+
+127.0.0.1       localhost localhost.localdomain localhost4 localhost4.localdomain4
+192.168.0.215   ol7.localdomain  ol7
+
+
+inmycase:
+   ociebsap06.localdomain ociebsap06
+
+===================================================================================================================================================
+select name,open_mode from v$database;--->to check whether my database is up and running or not
+NAME      OPEN_MODE
+--------  -----------------
+PRIM      READ WRITE(UP & RUNNING MEANING)
+(DB NAME)
+
+=====================================================================================================================================================
+TO CHECK WHETHER MY DATABASE IS RUNNING WHICH PARAMETER FILE(SPFILE / PFILE)?
+show parameter spfile;
+NAME				TYPE 			VALUE
+------------------------------  ---------------------  ----------------
+spfile				string 			$ORACLE_HOME/dbs/spfileprime.org
+======================================================================================================================================================
+SPFILE IS BINARYFILE SO INORDER TO SEE IN TEXT FORMATE WE NEED TO CREATE PFILE
+NOW WE SEE HOW TO CREATE PFILE
+
+create pfile from spfile;
+
+#File created
+
+ 
+[$ORACLE_HOME/dbs]$ ls -ltr
+you will see pfile (initprime.org)
+======================================================================================================================================================
+starting database:
+startup nomount;
+alter database mount;
+alter database open;
+c
+changing one parameter in spfile:
+
+alter system set processess=500 scope=spfile;(initially processess=400 now we are changing)
+
+this parameter will not get changed immediately bcz it is static parameter
+in oracle DB there are 2 types of parameters are there 1) static 2)dynamic
+static->this will not updated immmediately need to shutdowm and start the database again
+dynamic->this will updated immediately no need to shutdown and start db
+
+onething should remember this parameter is updated in spfile only not in pfile bcz we given scope=spfile
+
+if we want to see updated value in pfile also create new pfile from spfile
+create pfile from spfile;
+(now parameter chnaged in pfile also)
+=======================================================================================================================================================
+How to check whether parameter is dynamic or static:
+
+DESC v$parameter;
+
+you can see view.
+
+select NAME,ISSYS_MODIFIABLE from v$parameter where name='processess';
+
+NAME			ISSYS_MODIFIABLE
+---------------------   -------------------
+processess		FALSE  (means static)
+
+select NAME,ISSYS_MODIFIABLE from v$parameter where name='open_cursors'
+
+NAME			ISSYS_MODIFIABLE
+---------------------   -------------------
+processess		Immediate  (means dynamic)
+
+=======================================================================================================================================================
+
+How to change sys password:
+
+alter user sys identified by welcome(<-it is password)
+
+========================================================================================================================================================
+how to move from Container database to pluggable database:
+
+alter session set container=pdborcl;
+show con_name;
+o/p:  con_name
+      --------
+      pdborcl 
+now change pdborcl from mount state to open as follows:
+alter pluggable database open;
+  if you want to openn particular pluggable database thn use below statement:
+	SQL> alter pluggable database pdborcl open;
+  if you want to close particular pluggable database thn use below statement:
+	SQL> alter pluggable database pdborcl close; (open->mounted happen here)
+=========================================================================================================================================================
+steps to unlock hr schema:
+1) first chnage CDB to PDB
+    alter session set container=pdborcl;
+2)go to tnsnames.ora then add tnsname like pdborcl as follows
+	PDBORCL =(DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCP)(HOST = ociebsap06.localdomain)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVER = DEDICATED)
+      (SERVICE_NAME = pdborcl.subnetapp.ociappsvcn.oraclevcn.com)
+    )
+  )
+3) connect hr/hr@pdborcl;
+4) select table_name from user_tables; ->you can see all samples tables in hr schema.
+
+=======================================================================================================================================================
+how to write and run sql scripts:
+1)select table_name from user_tables;
+2)this query display result
+3)now save this query as test.sql as follows
+4)save test.sql
+5)now run this file as follows
+6)@test.sql
+7)note this file is saved at location before you are in as oracle user
+8)another way to run this file as 
+	sqlplus sys/061998@orcl as sysdba @test.sql
+======================================================================================================================================================
+
+
+/u01/app/oracle/oradata/orcl-->datafiles
+
+/u01/app/oracle-->oracle base
+
+/u01/app/oracle/product/12.1.0.2/db_1 -->oracle home
+
+orcl-->ORACLE_SID
+
+cd /u01/stage/oracle/ebs/12.2.0/startCD/Disk1/rapidwiz
+tail -f /u01/oracle/PROD/12.1.0/appsutil/log/PROD_ociebsap06/01071114.log  
+tail -f /u01/applmgr/PROD/fs2/inst/apps/PROD_ociebsap06/logs/01071114.log
+
+
+screen -dmS KISHORE -L
+screen -r KISHORE
+ociebsap06.subnetapp.ociappsvcn.oraclevcn.com
+1531
+ociebsap06.subnetapp.ociappsvcn.oraclevcn.com:PROD:1531
+
+
+cd /u01/applmgr/PROD/fs1/EBSapps/appl-->appltop
+
+ls -ltr *env
+
+. APPSPROD.env
+. PROD.env
+. ./.bash_profile
+pf -ef|grep applmgr
+kill -9 
+
+https://education.oracle.com/learn/oracle-cloud-infrastructure/pPillar_640/?source=:ow:o:u:feb:::SolNavBanner&intcmp=:ow:o:u:feb:::SolNavBanner
+
+zebra:Kishore199806@
+P Sankara Narayanan
