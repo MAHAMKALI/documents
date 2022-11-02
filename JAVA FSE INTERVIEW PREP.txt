@@ -84,6 +84,90 @@ core java interview questions:
 			  return single_instance;
 			}
 		}
+10a)what is memory leak in java application? what are its types? how to detect memory leaks?
+A: A memory leak is a situation where unused objects occupy unnecessary space in memory.It reduces application performance.
+   Types:- i)Through static fields: Excessive usage of static fileds leads meamory leakage
+           ii)Unclosed Resources: Resourses such as connections and streams utilize memory. if they are not closed leads memory leakage
+	   iii)Improper equals() and hashCode() methods implementations
+  How to detect:
+  	i)Using memory profilers: Memory profilers are tools that can monitor memory usage and help detect memory leaks in an application.some are Java VisualVM,   JProfiler and YourKit.
+	ii)using Verbose Garbage Collection: To obtain a detailed trace of the Java GC, verbose garbage collection can be enabled by adding -verbose:gc parameter
+	in JVM configuration
+	
+10b)what is stringTokenizer in java?
+A: A StringTokenizer class is a class present in the java.util package and it is used to break a String into tokens.It tokenize the string on the basis of the delimiters provided to the String tokenizer class object.The Common delimiters are the whitespaces, tab, newline, carriage return, and form feed.
+
+10c)what is the Importance of wait(), notify() and notifyAll() methods in Java?
+A: The threads can communicate with each other through wait(), notify() and notifyAll() methods in Java. These are final methods defined in the Object class
+   wait(): The wait() method causes the current thread to wait until another thread invokes the notify() or notifyAll() methods for that object. 
+   notify(): notify() method sends the notification to only one thread among the multiple waiting threads which are waiting for lock.
+   notifyAll(): notifyAll() methods  sends the notification to all waiting threads instead of single one thread.
+
+10d)What are class variables, instance variables and local variables in Java?
+A: class varaiables also know as static variables that are declared in class outside method or constructor with static keyword
+   instance variable are declared in class outside method or constructor
+   local variable is declared inside methods or constructors
+   
+   Note: There is no concept of Global varaibles in java
+   
+10e) Will a finally block execute after a return statement in a method in Java?
+A: Yes, the finally block will be executed even after a return statement in a method.
+ eg: public static int count() {
+      try {
+         return 1;
+      } catch(Exception e) {
+         return 2;
+      } finally {
+         System.out.println("Finally block will execute even after a return statement in a method");
+      }
+    }
+    
+10f)Can we have a return statement in the catch or, finally blocks in Java?
+A:  Yes, we can write a return statement of the method in catch and finally block.
+ Eg: int calc() {
+      try {
+         return 10;
+      } catch(Exception e) {
+         return 20;
+      } finally {
+         return 30;
+      }
+   }
+10e) Is it possible to have multiple try blocks with only one catch block in java?
+A: We cannot have multiple try blocks with a single catch block. Each try block must be followed by catch or finally. Still if you try to have single catch block for multiple try blocks a compile time error is generated.
+
+ class ExceptionExample{
+   public static void main(String args[]) {
+      int a,b;
+      try {
+         a=Integer.parseInt(args[0]);
+         b=Integer.parseInt(args[1]);
+      }
+      try {
+         int c=a/b;
+         System.out.println(c);
+      }catch(Exception ex) {
+         System.out.println("Please pass the args while running the program");
+      }
+   }
+}
+
+10f)Can we have a try block without a catch block in Java?
+A: Yes, It is possible to have a try block without a catch block by using a finally block.
+
+public class TryBlockWithoutCatch {
+   public static void main(String[] args) {
+      try {
+         System.out.println("Try Block");
+      } finally {
+         System.out.println("Finally Block");
+      }
+   }
+}
+
+10g)Can we have an empty catch block in Java?
+A: Yes, we can have an empty catch block. But this is a bad practice to implement in Java.Generally, the try block has the code which is capable of producing exceptions that is caught by the catch block.
+
 
 11)What is java class Loader? Explain its principles and its types?
 	Class Loader is an abstract class which belongs to java.lang package.It is used to load the classes from different resources at run time
