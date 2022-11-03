@@ -99,9 +99,18 @@ A: A StringTokenizer class is a class present in the java.util package and it is
 
 10c)what is the Importance of wait(), notify() and notifyAll() methods in Java?
 A: The threads can communicate with each other through wait(), notify() and notifyAll() methods in Java. These are final methods defined in the Object class
-   wait(): The wait() method causes the current thread to wait until another thread invokes the notify() or notifyAll() methods for that object. 
+   wait(): It simply pauses the thread until either specific number of milli seconds have left or it receives any notification from another thread 
    notify(): notify() method sends the notification to only one thread among the multiple waiting threads which are waiting for lock.
    notifyAll(): notifyAll() methods  sends the notification to all waiting threads instead of single one thread.
+
+10c1) why wait(),notify(),notifyAll() methods kept in Object class?
+A:  If wait() and notify() were on the Thread instead then each thread would have to know the status of every other thread and there is no way to know thread1 that  thread2 was waiting for any resource to access. Hence, notify, wait, notifyAll methods are defined in object class in Java
+
+10c2) What are daemon threads in java?
+A: Daemon threads are threads which run in background and works for the benefit of other threads. Garbage collector is one of the good example for daemon threads
+
+10c3) what is the purpose of nested classes in java?
+A: The purpose of nested classes is to group classes that belong together, which makes the code more readable and maintainable.
 
 10d)What are class variables, instance variables and local variables in Java?
 A: class varaiables also know as static variables that are declared in class outside method or constructor with static keyword
