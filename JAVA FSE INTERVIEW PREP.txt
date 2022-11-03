@@ -168,7 +168,32 @@ public class TryBlockWithoutCatch {
 10g)Can we have an empty catch block in Java?
 A: Yes, we can have an empty catch block. But this is a bad practice to implement in Java.Generally, the try block has the code which is capable of producing exceptions that is caught by the catch block.
 
+10h) what is exception? what is exception handling?types of exception in java?
+In Java, an exception is an event that disrupts the normal flow of the program. It is an object which is thrown at runtime.
+exception handling is the mechanism which is used to maintain normal flow of execution of java application.
+Types:
+		Throwable class
+			|
+		-------------------
+		|		   |
+	Exception		Error--------->StackOverFlowError,OutOfMemoryError,VirtualMachineError
+	    |
+            |---IOException
+	     -- SQLException
+	     --ClassNotFoundException
+	     --FileNotFoundException
+	     --RunTimeException|
+	     			|---Arithemetic Exception
+				 --NullPointer Exception
+				 --ArrayIndexOutOfBound
+				 --StringIndexOutOfBound
+				 
+CheckedException: The classes that directly inherit the Throwable class except RuntimeException and Error are known as checked exceptions.Checked exceptions are checked at compile-time.
 
+UncheckedExceptions: The classes that inherit the RuntimeException are known as unchecked exceptions. Unchecked exceptions are not checked at compile-time, but they are checked at runtime.
+
+
+   
 11)What is java class Loader? Explain its principles and its types?
 	Class Loader is an abstract class which belongs to java.lang package.It is used to load the classes from different resources at run time
 	Java class loader is based on 3 principles:
