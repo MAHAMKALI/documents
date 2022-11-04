@@ -202,6 +202,22 @@ CheckedException: The classes that directly inherit the Throwable class except R
 UncheckedExceptions: The classes that inherit the RuntimeException are known as unchecked exceptions. Unchecked exceptions are not checked at compile-time, but they are checked at runtime.
 
 
+10i) What is serializable?
+A: Serializable is a marker interface which does not contain any data members and methods.It is used to mark java class so that objects of this class may get certain capabilities
+
+10i1) What is serialization and deserialization in java?
+A: Serialization is the mechanism of converting the state of  object into byte stream.
+   Deserialization is the reverse process where byte stream is used to recreate the actual java object. 
+   This entire mechanism is used to persist java object
+   
+10i2)How can you make object a serializable in java?
+A: To make object serializable , 
+ serialization--> class must implements serializable interface and use ObjectOutputStream which extends OutputStream to write java objects to stream
+ Deserialization--> use ObjectInputStream which extends InputStream to read java objects from stream
+ 
+ 10i3)  what is SerialVersionUID? and its importance?
+ A: SerialVersionUID is a 64 bit long value which is hashcode of all properties of class and can be used to verify whether deserialized object is same or not with respect to serialized object. If both are not same then JVM throws InvalidClassException
+ 
    
 11)What is java class Loader? Explain its principles and its types?
 	Class Loader is an abstract class which belongs to java.lang package.It is used to load the classes from different resources at run time
