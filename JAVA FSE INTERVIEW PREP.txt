@@ -4,6 +4,29 @@ core java interview questions:
 	Because of primitive datatypes namely: byte,short,int,long,double,char,boolean,float
 	To make them Object oriented we have wrapper classes which actually "wrap" the primitive data type into an object of that class
 
+1a) what is JDK,JRE & JVM in java?
+A: JDK stands for java development kit which is a software used to develope and run java application. It contains JRE, compiler, debugger,javadoc & keytool
+   JRE stands for java runtime envinronment which provides platform to run java application in run time. It contains JRE and class libraries
+   JVM stands for java virtual machine which is the heart of java. It converts bytecode into machine code. and it is platform dependent
+   
+ 1b)can we define java class without a main method?
+ A: No. from java7 we can not run java application without main method but before java7 its possible as like below
+ 
+ public class Main{
+ 	
+	static{
+		System.out.println("Yes its printing...");
+	}
+}
+
+1c) can we make main method as final in java?
+A: yes. we can make main method as final so that its subclasses can not ovveride main method
+
+1d)what is List & set?
+List is an ordered collection which maintains insertion order and can store any number of null values
+Set is unordered collection which does not maintain insertion order and store atmost one null value
+
+
 2)why pointers are not allowed in java?
 	Because i)They are unsafe
 		ii)Increases the complexity of the program and since java is known for simplicity of code, adding the concepts of pointers will be 
@@ -218,7 +241,41 @@ A: To make object serializable ,
  10i3)  what is SerialVersionUID? and its importance?
  A: SerialVersionUID is a 64 bit long value which is hashcode of all properties of class and can be used to verify whether deserialized object is same or not with respect to serialized object. If both are not same then JVM throws InvalidClassException
  
-   
+10i4) Differences between HashMap,HashTable, Synchronized HashMap & CuncurrentHashMap? -->  All are concurrent collections in java, https://youtu.be/UwurUtvil7w
+
+		Synchronized 		Locking			No of Threads		Null 		Iterator 	When to use	
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+HashMap		It is not		No Lock 		Multiple Threads    1 null Key		Fail Fast	Single Threaded Environment
+		Synchronized							    N no of null
+										    values
+												
+HashTable	All operations		object level		 1 Thread	    Does not allow	Fail Safe	It is leagacy class& not 
+		are synchronized	Locking					    Null Key Null			recommended to use
+										    values
+										
+Synchronized	All operations 		object level		 1 Thread	    1 null key		Fail Fast	MultiThreaded Environment
+HashMap		are synchronized	Locking					    N no of null
+									            values
+										    
+Concurrent	Only Write		segment level		16 Threads	   Does not allow	Fail Safe	MultiThreaded Environment
+HashMap		Operations are		Locking			write & N	   Null keys Null
+		synchronized					Threads read	   Values
+		
+Note:
+Fail-fast throws ConcurrentModification Exception whenever we try to do structural modification of HashMap/Synchronized HashMap
+
+HashMap vs Synchronized HashMap
+HashMap vs Concurrent HashMap
+Synchronized HashMap vs Concurrent HashMap
+
+10i4) What is the internal working of HashMap? https://youtu.be/1CJbB6SzjVw
+A: HashMap stores objects in the form of key and values. key always unique and values might be null. HashMap internally contains HashCode() and equals() menthod.
+HashCode() is used to determinde hashvalue based on key. This hash value is used as index to store key values in HashMap. Suppose if Two keys produces same hash values(same index) then hashmap uses equals() methods to compare both keys. if keys are same then hashmap replaces existing key value pair with new pair. if key were found different then hashmap adds key value pair next of existing key value pair in same index
+
+Note: before java8 ,linkedlist was used as node to store key value pairs in hashmap but after java8 they are using balanced tree to store key values pairs this is the enhancement from java8
+
+
+
 11)What is java class Loader? Explain its principles and its types?
 	Class Loader is an abstract class which belongs to java.lang package.It is used to load the classes from different resources at run time
 	Java class loader is based on 3 principles:
