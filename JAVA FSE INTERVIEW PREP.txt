@@ -1076,3 +1076,175 @@ A: Dependencies are services in Angular which have some specific functionality. 
    ii)second one is we need to define the <router-outlet> in html file for where exactly that navigation will load
    iii)third one is we need to define [routerLink] in html and need to give URL name. If we want to route from .ts file instead of html file then we 
       use this.route.navigate(['/home'])
+      
+      
+      
+  Manager round:
+  ==============
+  
+  1)what is your role and your responsibilites in project?
+  A: My role is java developer and coming to my responsibilities are
+  	i) Involved in requirement gathering and analysis and technical feasiablity discussion with a team
+	ii)Involved in development of REST API's using spring boot,data jpa and oracle
+	iii)actively participated in Weekly KT sessions and daily scrum meets to discuss technical issues in the project
+	
+  2)what is your project architecture?
+  A: The high level architecture of my project is to allow pensioners users by proper login authentication and authorization.This we have implemeneted by developing Authorization microservice using spring security with JWT utility. Then user request able hit process pension microservice so that client request will be processed by calculating pension amount by calling pensioner detailer microservice. 
+  
+  3) can i call your manager now to know about your performance in project?
+  A: yes, off course you can do that.He will give very good feedback about me because i am the one of the top performer in my team.
+  But if you call him and ask now he may get a negative impression on me because he dont know that ia m looking for job change. once i joined here you can take 
+  feedback from him that will not create any problem for my career
+  
+  4)Apart from your regular work what extra work you have done in your company?
+  A:  I provided KT to interns and freshers who weer joined recently. I have organized techincal quizes for entire BU.
+  
+  5)Have you ever involved in efforst estimation?
+  A: Yes. when new task was assigned by my lead I used to provide estimated efforsts(It means no of hours need to complete development and final document)
+  
+  6)How many Environments are there for your application?
+  A: Local: where we develope application
+     DEV(DIT): where  developer do integration testing
+     SIT: System integration testing, it is for testers to test the application
+     UAT:User accepting testing env for clients to test the application
+     pilot(pre production): It is pre production env for performance testing
+     prod: That is a live environment
+     
+   7)which SDLC methodology following in your project?
+   A: Agile
+   
+   8)what is difference between scrum and sprint?
+   A: daily scrum is a short stand up meeting where team members disscuss about the work that was completed previously and what need to be done in next 24hrs 
+   and it is time where we discuss any issues in our project
+   
+   Sprint refers time frame in which work must be completed by every one from our team. It usally 30 days
+   
+   9)what are the tools have you used in your project?
+   	I) Build Tool--maven
+	ii)Logging Tool--SLF4J
+	III)Log monitoring tool --putty,winscp
+	IV)Repository tools--SVN/GIT
+	V)Code review tools --SonarQube
+  
+  10) what are the design patterns used in your project?
+  A:  The design patterns like singleton design pattern,Strategy design pattern,MVC design pattern,Front controller design pattern, chache design pattern
+      Front controller design pattern: https://www.javaguides.net/2018/08/front-controller-design-pattern-in-java.html
+      ================================
+      The front controller design pattern is used to provide a centralized request handling mechanism so that all requests will be handled by a single handler. This handler can do the authentication/ authorization/ logging or tracking of request and then pass the requests to corresponding handlers
+      
+  11)How will you connect with onshore team?
+  A: To communicate with onshore team members we will bridge calls using skype or webex
+  
+  12)Have you ever commuinicated with onshore team?
+  A: I didn't get chance to communicate with myclient directly till now. When i have a doubt on requirement i will communicate with my functional team who
+  are in onshore
+  
+  13)what is MOM?
+  A: MON--Minutes of meeting. once meeting has completed it is highly recommended to share meeting summary like points discussed and action items
+  
+  14)Have you ever involved in Defect Triaging?
+  A: yes. My project UAT happening in onshore. when issue identified in UAT environment,UAT Testing will handover defects in triage call.In UAT Phase, daily we 
+  will have defeact triage call.In this call both onsite and offshore team memebers will join and discuss related fefeacts reported in UAT
+  
+  15)What is BRD?
+   A: BRD stands for bussiness requirement document which contains high level requirements and scope of requirements
+   
+  16)Whta is TDD?
+  A: TDD stands for technical design document . It contains requirement implementation details like
+  	i)Bussiness requirements
+	ii)scope of requirements
+	iii)Assumptions
+	iv)limitations
+	v)know issues
+	vi)process diagrams(class diagrams,sequence diagrams,flow diagrams)
+	vii)database details like new tables, changes to existing tables
+	viii)screenshorts
+	ix)Batch details and batch sheduling details
+	x)Appendix
+
+17)what is difference between TDD and FDD?
+A: FDD is Functional design document which contains details of requirement. it  is prepared by functional/ bussiness team
+   TDD is Technical design document which contains implementation details. It is prepared by developer
+  
+18)Do you know UML Diagrams?
+yes. In my current project i prepared some technical design documents. As part of TDD, i have created class diagrams, sequence diagrams and flow diagrams
+
+19)what is difference between class diagram and sequence diagram?
+A: class diagram is a type of static structure diagram that describes the structure of system by showing the system classes,their attributes, operations/methods
+and relationships among objects
+
+sequence diagram shows objects interactions in time dequence. sequence diagrams somtimes called as event diagrams or event scenerios
+
+20)which tool you used to create TDD?
+A: To create TTD, we used Enterprise Architect(EA) Tool
+    we can also use other tools like microsoft visio or Star UML etc
+
+21)How will you get FDD in company?
+A: once FDD got approved by client, my functional team will upload FDD in share point location and they will share sharepoint location to us
+   Using that sharepoint URL we will dowload FDD document
+   
+22)Do you know what is Query Log?
+A: yes. In my project we are using Query Log. when we have doubts on FDD document, we will prepare our queries in query Log and will upload that in sharepoint.
+Then functional team will provide clarifications to the queries which are logged in query log
+
+23)what is bridge call?
+A; It is like a conference call which is used to discuss project related details with project team members. 
+
+24)Which repository server you are using in your project?
+A: GIT/SVN/BitBucket
+
+25)what is check-in and check-out?
+A: check-in : moving files from local to repository called check-in
+   check-out: moving files from repository to local called check-out
+   
+26)How will you do code check-in?
+A: After making my code chnages, i will compare changes files with repository files. if they are any new chnages in repository server then i will take update
+from repository.Then i will make no conflicts are there in the files then i will commit chnaged files to repository server
+
+27)which client software you have used for SVN?
+A: i used tortoise
+
+28)have you ever used VPN?
+A: VPN  stands for virtual private network which is used to used to access client specific data like project source code, functional design documents etc
+
+29)what is debugging?
+A:  Debugging is the process of executing code step by step which is used to identify the bugs in code
+
+30)Tell me difference between debugging and testing?
+A: Debugging is used to identify and fix bugs which is done by developer
+   testing is used to identify the bugs in source code. It will be done by tester
+   
+31)Tell me debugging shortcuts?
+A:  F5--To go inside a method
+    F6--To go to next line
+    F7--Tocome back to caller
+    F8--To move to nextbreak point
+    
+ 32) can we change value of variable when program is running?
+ A: Yes using variable pallet we can chanage values of variables when program is under execution
+ 
+ 33)How will you debug an issue in production environment?
+ A: using log files,i will identify where exactly the issue occured
+ 
+ 34)whatb is logging?
+ A: it is a process of writing down everything we do
+  
+  35) Tell me logging levels?
+  A: Trace, Debug,Info,warn,Error,Fatal
+  
+  36)which log level your project having in production?
+  A: in my production system, infra team configured info level
+  
+  37)what is putty and winscp?
+  A: putty and winscp tools are used for connecting linux machines .I am using windows operating system for developement an dmy project higher
+     environments are having linux os . when i want to see logs of application  the i will use putty or winscp  to connect from my windows to linux os
+   
+ 38)what are the challanges you faced in your project?
+ A: In my training i was learned only tech stack but not have any idea on linux and putty tool so once i moved to project i was felt somehow difficult to
+ execute linux commands even to check logs also. then i did self learning from udemy then in next few weeks i picked up  an dnow i can able to handle 
+ linux environmnet as well using putty
+ 
+ 39)
+ 
+      
+     
